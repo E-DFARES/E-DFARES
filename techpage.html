@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Technician Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link to Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="pagestyles.css">
+</head>
+
+<body class="bg-gray-100">
+    <header class="headertop bg-blue-900 text-white p-5">
+    <div class="containerhh mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">E-DFARES <i class="fa-solid fa-user-gear"></i> Technician - <span id="techFullname"></span></h1>
+
+        <nav>
+            <ul class="flex space-x-4">
+                <button id="signoutbutton">Sign Out <i class="fa-solid fa-right-from-bracket"></i></button>
+            </ul>
+        </nav>
+    </div>
+</header>
+<footer class="footerbtm bg-blue-900 text-white p-6">
+    <p>&copy; 2024 E-DFARES. All rights reserved.</p>
+</footer>
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <button id="showProfile" data-specific-id="tprofile"><i class="fa-regular fa-user"></i> Profile</button>
+            <button id="showReportList" data-specific-id="treport"><i class="fa-regular fa-flag"></i> Report</button>
+            <button id="showOrderList" data-specific-id="torder"><i class="fa-regular fa-clipboard"></i> Order</button>
+            <button id="showFeedback" data-specific-id="tfeedback"><i class="fa-regular fa-comment"></i> Chat</button>
+            <button id="showContactus" data-specific-id="tcontact"><i class="fa-solid fa-phone"></i> Contact Us</button>
+            <button id="showUsermanual" data-specific-id="tmanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
+        </div>
+
+        <script>
+            // Function to store a specific ID in localStorage
+            function storeButtonClick(event) {
+                const specificId = event.currentTarget.getAttribute('data-specific-id');
+                localStorage.setItem('TechlastClickedButton', specificId);
+                console.log(`Stored ${specificId} in localStorage`);
+            }
+    
+            // Function to add event listeners to buttons
+            function addClickListeners() {
+                const buttons = document.querySelectorAll('button[data-specific-id]');
+                buttons.forEach(button => {
+                    button.addEventListener('click', storeButtonClick);
+                });
+            }
+    
+            // Function to click the button that matches the specific ID in localStorage
+            function clickLastButton() {
+                const TechlastClickedButtonId = localStorage.getItem('TechlastClickedButton');
+                if (TechlastClickedButtonId) {
+                    const TechlastClickedButton = document.querySelector(`button[data-specific-id="${TechlastClickedButtonId}"]`);
+                    if (TechlastClickedButton) {
+                        TechlastClickedButton.click();
+                        console.log(`Clicked button with data-specific-id ${TechlastClickedButtonId} from localStorage`);
+                    }
+                }
+            }
+    
+            // Add event listeners when the DOM content is loaded
+            document.addEventListener('DOMContentLoaded', () => {
+                addClickListeners();
+                clickLastButton();
+            });
+        </script>
+
+        <!-- Main content -->
+        <div class="flex-1 p-6">
+            <h2 class="technician text-2xl font-bold mb-4"><span id=""></span></h2>
+
+    <!-- Profile -->
+    <div id="profileListContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-user"></i> Profile</h2>
+        <div id="infoContainer" class="info-container">
+            <p id="adminFullname" class="text-lg font-semibold text-gray-700"></p>
+            <p id="techFullname2" class="text-lg font-semibold text-gray-700"></p>
+            <p id="techICNumber" class="text-lg font-semibold text-gray-700"></p>
+            <p id="techEmail" class="text-lg font-semibold text-gray-700"></p>
+        </div>
+    </div>
+
+    <!-- Report List -->
+    <div id="treportListContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-flag"></i> Report List</h2>
+        <div id="infoContainer" class="info-container"></div>
+        <!-- Table for displaying orders -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-tuserfullname">User Name</th>
+                    <th class="col-tproduct">Product</th>
+                    <th class="col-tserialnumber">Serial Number</th>
+                    <th class="col-treport">Report</th>
+                    <th class="col-tdate">Date</th>
+                </tr>
+            </thead>
+            <tbody id="reportTableBody">
+            <!-- Order rows will be appended here -->
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+    <!-- Order List -->
+    <div id="orderListContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
+        <div id="infoContainer" class="info-container"></div>
+        <!-- Table for displaying orders -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-userfullname">User Full Name</th>
+                    <th class="col-product">Product</th>
+                    <th class="col-approval">Approval</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Order rows will be appended here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Feedback -->
+    <div id="feedbackContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-comment"></i> Chat</h2>
+        <div id="infoContainer" class="info-container"></div>
+        <div class="input-container">
+            <div id="chatContainer" class="chat-container"></div>
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+
+<!-- Contact Us -->
+<div id="contactusContainer" class="hidden container">
+    <h2 class="title"><i class="fa-solid fa-phone"></i> Contact Us</h2>
+    <div id="infoContainer" class="info-container">
+        <h3>Customer Support</h3>
+        <p>If you have any questions or need assistance, please feel free to reach out to our customer support team. We are here to help you with any issues or concerns you may have.</p>
+        
+        <h3>Contact Information</h3>
+        <ul>
+            <li><strong>Email:</strong> support@edfares.com</li>
+            <li><strong>Phone:</strong> +1 (800) 123-4567</li>
+            <li><strong>Address:</strong> 1234 Admin Street, Suite 100, Admin City, AC 12345</li>
+        </ul>
+        
+        <h3>Business Hours</h3>
+        <p>Our support team is available during the following hours:</p>
+        <ul>
+            <li><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</li>
+            <li><strong>Saturday:</strong> 10:00 AM - 4:00 PM</li>
+            <li><strong>Sunday:</strong> Closed</li>
+        </ul>
+        
+        <h3>Follow Us</h3>
+        <p>Stay connected and follow us on social media for the latest updates and news:</p>
+        <ul>
+            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/edfares" target="_blank">facebook.com/edfares</a></li>
+            <li><strong>Twitter:</strong> <a href="https://www.twitter.com/edfares" target="_blank">twitter.com/edfares</a></li>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/company/edfares" target="_blank">linkedin.com/company/edfares</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- User Manual -->
+<div id="usermanualContainer" class="hidden container">
+    <h2 class="title"><i class="fa-regular fa-file-lines"></i> User Manual</h2>
+    <div id="infoContainer" class="info-container">
+        <h3>Introduction</h3>
+        <p>Welcome to the E-DFARES Technician Page. This manual will guide you through the various features and functionalities available to you.</p>
+
+        <h3>Profile</h3>
+        <p>The Profile section displays your personal information. To view your profile, click the "Profile" button in the sidebar. Your details such as name, IC number, and email will be displayed.</p>
+        
+        <h3>Report List</h3>
+        <p>In the Report List section, you can view all the reports submitted. To access this section, click the "Report" button in the sidebar. A table will show the user name, product, serial number, report details, and date.</p>
+        
+        <h3>Order List</h3>
+        <p>The Order List section allows you to see all approved orders. Click the "Order" button in the sidebar to view a table listing the user full name, product, and approval status.</p>
+        
+        <h3>Feedback</h3>
+        <p>The Feedback section is where you can communicate via chat. Click the "Chat" button in the sidebar to access the chat interface. You can type your message in the input field and click "Send" to submit it.</p>
+        
+        <h3>Contact Us</h3>
+        <p>For any assistance or inquiries, navigate to the "Contact Us" section by clicking the respective button in the sidebar. Here you will find customer support details, contact information, business hours, and social media links.</p>
+        
+        <h3>User Manual</h3>
+        <p>This section contains the user manual itself. You are currently viewing it.</p>
+        
+        <h3>Sign Out</h3>
+        <p>To sign out of your account, click the "Sign Out" button located in the top navigation bar.</p>
+
+        <h3>Navigation Tips</h3>
+        <p>Use the sidebar to navigate between different sections. Your last visited section will be remembered and opened automatically the next time you log in.</p>
+    </div>
+</div>
+
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getDatabase, get, push, onValue, remove, ref, child } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCi54RIsuF-w0-baut0GZ1yNyoMg5VsNMw",
+            authDomain: "e-dfares.firebaseapp.com",
+            databaseURL: "https://e-dfares-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "e-dfares",
+            storageBucket: "e-dfares.appspot.com",
+            messagingSenderId: "172364723669",
+            appId: "1:172364723669:web:90b88766d4ef37fffb395c",
+            measurementId: "G-H28TTTD19M"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+
+
+        // Retrieve admin UID from localStorage
+        const admincUid = localStorage.getItem("tech-admin-uid");
+        let useruFullName;
+
+        if (!admincUid) {
+            console.error("Admin UID not found in localStorage");
+        } else {
+            getAdminInfo(admincUid);
+        }
+
+        // Function to fetch and display orders with real-time updates
+        function fetchAndDisplayOrders() {
+            const ordersRef = ref(db, `AdminsAuthList/${admincUid}/approved`);
+
+            // Listen for real-time updates
+            onValue(ordersRef, (snapshot) => {
+                const orderTableBody = document.getElementById("orderTableBody");
+                orderTableBody.innerHTML = ""; // Clear the table body first
+
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const orderData = childSnapshot.val();
+                        const orderId = childSnapshot.key;
+                        const orderRow = document.createElement("tr");
+                        orderRow.setAttribute('data-id', orderId);
+                        orderRow.innerHTML = `
+                            <td>${orderData.userFullName}</td>
+                            <td>${orderData.product}</td>
+                            <td style="text-align: center; color: green;">Approved</td>
+                        `;
+                        orderTableBody.appendChild(orderRow);
+                    });
+                } else {
+                    console.log("No orders available for this admin.");
+                }
+            }, (error) => {
+                console.error("Error retrieving orders:", error);
+            });
+        }
+
+        // Call fetchAndDisplayOrders to initialize the real-time data fetching
+        fetchAndDisplayOrders();
+
+
+
+        // Function to fetch and display reports with real-time updates
+        function fetchReports() {
+            const adminUid = localStorage.getItem("tech-admin-uid");
+            if (!adminUid) {
+                console.log("Admin UID not found");
+                return;
+            }
+
+            const reportsRef = ref(db, `AdminsAuthList/${adminUid}/reports`);
+
+            // Listen for real-time updates
+            onValue(reportsRef, (snapshot) => {
+                const reportTableBody = document.getElementById("reportTableBody");
+                reportTableBody.innerHTML = ""; // Clear the table body first
+
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const reportId = childSnapshot.key;
+                        const report = childSnapshot.val();
+                        const row = document.createElement("tr");
+
+                        const userFullNameCell = document.createElement("td");
+                        userFullNameCell.textContent = report.userFullName || "N/A";
+                        row.appendChild(userFullNameCell);
+
+                        const productCell = document.createElement("td");
+                        productCell.textContent = report.product || "N/A";
+                        row.appendChild(productCell);
+
+                        const serialNumberCell = document.createElement("td");
+                        serialNumberCell.textContent = report.serial || "N/A";
+                        row.appendChild(serialNumberCell);
+
+                        const reportCell = document.createElement("td");
+                        reportCell.textContent = report.report || "N/A";
+                        row.appendChild(reportCell);
+
+                        const dateCell = document.createElement("td");
+                        dateCell.textContent = report.date || "N/A";
+                        row.appendChild(dateCell);
+
+                        reportTableBody.appendChild(row);
+                    });
+                } else {
+                    console.log("No data available");
+                }
+            }, (error) => {
+                console.error("Error fetching reports:", error);
+            });
+        }
+
+        // Call fetchReports to initialize the real-time data fetching
+        fetchReports();
+
+
+            
+
+        function getAdminInfo(adminUid) {
+            const adminRef = ref(db, `AdminsAuthList/${adminUid}`);
+            get(child(adminRef, 'adminicnumber')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const adminicnumber = snapshot.val();
+                    localStorage.setItem("tech-admin-icnumber", adminicnumber);
+                    return adminicnumber;
+                } else {
+                    console.log("No data available");
+                    return null;
+                }
+            }).then((adminicnumber) => {
+                get(child(adminRef, 'adminfullname')).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const adminfullname = snapshot.val();
+                        localStorage.setItem("tech-admin-fullname", adminfullname);
+                        document.getElementById("adminFullname").textContent = `Admin : ${adminfullname}`;
+                    } else {
+                        console.log("No data available");
+                    }
+                });
+            });
+        }
+
+        const techcreds = localStorage.getItem("tech-creds");
+
+        if (!techcreds) {
+            window.location.href = "logintech.html";
+        } 
+
+        // Retrieve admin UID from localStorage
+        const adminUid = localStorage.getItem("tech-admin-uid");
+        let userFullName;
+
+        if (!adminUid) {
+            console.error("Admin UID not found in localStorage");
+        } else {
+            getAdminInfo(adminUid);
+        }
+
+
+
+        const techInfo = JSON.parse(localStorage.getItem("tech-info"));
+        const techCreds = JSON.parse(localStorage.getItem("tech-creds"));
+
+        if (adminUid && techInfo && techCreds) {
+            document.getElementById("techICNumber").textContent = `Ic: ${techInfo.techicnumber}`;
+            document.getElementById("techFullname").textContent = `${techInfo.techfullname}`;
+            document.getElementById("techFullname2").textContent = `Name: ${techInfo.techfullname}`;
+            document.getElementById("techEmail").textContent = `Email: ${techCreds.email}`;
+            userFullName = techInfo.techfullname;
+        }
+
+        document.getElementById('sendButton').addEventListener('click', () => {
+            const chatInput = document.getElementById('chatInput').value;
+            if (chatInput.trim() !== '') {
+                const chatRef = ref(db, `AdminsAuthList/${adminUid}/Chat`);
+                push(chatRef, {
+                    message: chatInput,
+                    chatName: userFullName,
+                    timestamp: Date.now()
+                }).then(() => {
+                    document.getElementById('chatInput').value = ''; // Clear input field after sending
+                    console.log('Message sent successfully');
+                    setTimeout(scrollToBottom, 100); // Auto-scroll to bottom after sending
+                }).catch((error) => {
+                    console.error('Error sending message:', error);
+                });
+            }
+        });
+
+        const chatContainer = document.getElementById('chatContainer');
+        const chatRef = ref(db, `AdminsAuthList/${adminUid}/Chat`);
+
+        onValue(chatRef, (snapshot) => {
+            const messages = snapshot.val();
+            chatContainer.innerHTML = ''; // Clear previous chat messages
+            for (const messageId in messages) {
+                const messageData = messages[messageId];
+                const chatTextarea = document.createElement('textarea');
+                chatTextarea.classList.add('chat-textarea');
+                chatTextarea.readOnly = true;
+                chatTextarea.value = `${messageData.chatName}: ${messageData.message}`;
+                chatContainer.appendChild(chatTextarea);
+            }
+            setTimeout(scrollToBottom, 100); // Auto-scroll to bottom after loading messages
+        });
+
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+
+        document.getElementById("showProfile").addEventListener("click", () => {
+            document.getElementById("profileListContainer").classList.remove("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+        });
+
+        document.getElementById("showReportList").addEventListener("click", () => {
+            document.getElementById("treportListContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+
+            // Fetch reports when the Report List button is clicked
+            fetchReports();
+        });
+
+        document.getElementById("showOrderList").addEventListener("click", () => {
+            document.getElementById("orderListContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+        });
+
+        
+        document.getElementById("showFeedback").addEventListener("click", () => {
+            document.getElementById("feedbackContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+        });
+
+        document.getElementById("showContactus").addEventListener("click", () => {
+            document.getElementById("contactusContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+        });
+
+        document.getElementById("showUsermanual").addEventListener("click", () => {
+            document.getElementById("usermanualContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+        });
+
+        // Function to handle sign out
+        document.getElementById("signoutbutton").addEventListener("click", () => {
+            // Clear specific items from localStorage
+            localStorage.removeItem("tech-admin-icnumber");
+            localStorage.removeItem("tech-creds");
+            localStorage.removeItem("tech-admin-fullname");
+            localStorage.removeItem("tech-admin-uid");
+            localStorage.removeItem("tech-info");
+            localStorage.removeItem("TechlastClickedButton");
+            
+            // Redirect to login page
+            window.location.href = "logintech.html";
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Link to the custom styles.css file -->
+  <link href="rlstyles.css" rel="stylesheet">
+</head>
+
+<header class="headertop bg-blue-900 text-white p-5">
+  <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-bold">E-DFARES</h1>
+      <nav>
+          <ul class="flex space-x-4">
+            <li><a href="home.html" class="hover:underline">Home</a></li>            </ul>
+          </ul>
+      </nav>
+  </div>
+</header>
+<footer class="footerbtm bg-blue-900 text-white p-5">
+<p>&copy; 2024 E-DFARES. All rights reserved.</p>
+</footer>
+
+<body class="bg-blue-50"></body>
+<div class="parent-container flex justify-center items-center h-4/5 mt-10">
+  <!-- Main container for the registration form -->
+  <div class="form-container">
+    <!-- Form heading -->
+    <h2 class="form-heading"><i class="fa-solid fa-user-tie"></i> Register Admin</h2>
+    <!-- Form content -->
+    <form id="MainForm" class="form-content">
+      <!-- Ic Number and Full name input group -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Ic number input -->
+        <div class="form-group">
+          <label for="aicInp" class="form-label">Ic Number</label>
+          <input type="text" id="aicInp" class="form-input" placeholder="Ic Number">
+        </div>
+        <!-- Full name input -->
+        <div class="form-group">
+          <label for="afnameInp" class="form-label"><i class="fa-regular fa-address-card"></i> Full Name</label>
+          <input type="text" id="afnameInp" class="form-input" placeholder="Full Name">
+        </div>
+      </div>
+      <!-- Email input group -->
+      <div class="form-group">
+        <label for="emailInp" class="form-label"><i class="fa-regular fa-envelope"></i> Email address</label>
+        <input type="email" id="emailInp" class="form-input" placeholder="name@example.com">
+      </div>
+      <!-- Password input group -->
+      <div class="form-group">
+        <label for="passwordInp" class="form-label"><i class="fa-solid fa-lock"></i> New Password</label>
+        <div class="relative">
+          <input type="password" id="passwordInp" class="form-input" placeholder="Password">
+          <button type="button" id="togglePassword" class="inset-y-0 toggle-password">Show</button>
+        </div>
+      </div>
+      <!-- Submit button -->
+      <button type="submit" class="submit-btn">Register New Account</button>
+      <!-- Link to login page -->
+      <a href="loginadmin.html" class="signin-btn">Already Have Account? Login</a>
+    </form>
+  </div>
+
+  <script>
+    const togglePasswordButton = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('passwordInp');
+
+    togglePasswordButton.addEventListener('click', function () {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+  </script>
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCi54RIsuF-w0-baut0GZ1yNyoMg5VsNMw",
+      authDomain: "e-dfares.firebaseapp.com",
+      databaseURL: "https://e-dfares-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "e-dfares",
+      storageBucket: "e-dfares.appspot.com",
+      messagingSenderId: "172364723669",
+      appId: "1:172364723669:web:90b88766d4ef37fffb395c",
+      measurementId: "G-H28TTTD19M"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+    const auth = getAuth(app);
+
+    let EmailInp = document.getElementById('emailInp');
+    let PassInp = document.getElementById('passwordInp');
+    let AIcInp = document.getElementById('aicInp');
+    let AFnameInp = document.getElementById('afnameInp');
+    let MainForm = document.getElementById('MainForm');
+
+    let RegisterUser = evt => {
+      evt.preventDefault();
+
+      createUserWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+      .then((credentials) => {
+        set(ref(db, 'AdminsAuthList/' + credentials.user.uid), { // Ensure path matches login code
+          adminicnumber: AIcInp.value,
+          adminfullname: AFnameInp.value
+        }).then(() => {
+          alert('User registered successfully');
+          window.location.href = 'loginadmin.html';
+        }).catch((error) => {
+          alert('Error saving user data: ' + error.message);
+          console.error('Database write error:', error);
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+        console.error('Authentication error:', error.code, error.message);
+      });
+    }
+
+    MainForm.addEventListener('submit', RegisterUser);
+  </script>
+</body>
+</html>

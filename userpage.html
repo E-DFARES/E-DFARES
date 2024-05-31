@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link to Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="pagestyles.css">
+</head>
+
+<body class="bg-gray-100">
+    <header class="headertop bg-blue-900 text-white p-5">
+    <div class="containerhh mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">E-DFARES <i class="fa-solid fa-user"></i> User - <span id="userFullname"></span></h1>
+
+        <nav>
+            <ul class="flex space-x-4">
+                <button id="signoutbutton">Sign Out <i class="fa-solid fa-right-from-bracket"></i></button>
+            </ul>
+        </nav>
+    </div>
+</header>
+<footer class="footerbtm bg-blue-900 text-white p-6">
+    <p>&copy; 2024 E-DFARES. All rights reserved.</p>
+</footer>
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <button id="showProfile" data-specific-id="uprofile"><i class="fa-regular fa-user"></i> Profile</button>
+            <button id="showProductList" data-specific-id="uproduct"><i class="fa-solid fa-laptop"></i> Product</button>
+            <button id="showReportList" data-specific-id="ureport"><i class="fa-regular fa-flag"></i> Report</button>
+            <button id="showOrderList" data-specific-id="uorder"><i class="fa-regular fa-clipboard"></i> Order</button>
+            <button id="showFeedback" data-specific-id="ufeedback"><i class="fa-regular fa-comment"></i> Chat</button>
+            <button id="showContactus" data-specific-id="ucontact"><i class="fa-solid fa-phone"></i> Contact Us</button>
+            <button id="showUsermanual" data-specific-id="umanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
+        </div>
+
+        <script>
+            // Function to store a specific ID in localStorage
+            function storeButtonClick(event) {
+                const specificId = event.currentTarget.getAttribute('data-specific-id');
+                localStorage.setItem('UserlastClickedButton', specificId);
+                console.log(`Stored ${specificId} in localStorage`);
+            }
+    
+            // Function to add event listeners to buttons
+            function addClickListeners() {
+                const buttons = document.querySelectorAll('button[data-specific-id]');
+                buttons.forEach(button => {
+                    button.addEventListener('click', storeButtonClick);
+                });
+            }
+    
+            // Function to click the button that matches the specific ID in localStorage
+            function clickLastButton() {
+                const UserlastClickedButtonId = localStorage.getItem('UserlastClickedButton');
+                if (UserlastClickedButtonId) {
+                    const UserlastClickedButton = document.querySelector(`button[data-specific-id="${UserlastClickedButtonId}"]`);
+                    if (UserlastClickedButton) {
+                        UserlastClickedButton.click();
+                        console.log(`Clicked button with data-specific-id ${UserlastClickedButtonId} from localStorage`);
+                    }
+                }
+            }
+    
+            // Add event listeners when the DOM content is loaded
+            document.addEventListener('DOMContentLoaded', () => {
+                addClickListeners();
+                clickLastButton();
+            });
+        </script>
+
+        <!-- Main content -->
+        <div class="flex-1 p-6">
+            <h2 class="technician text-2xl font-bold mb-4"><span id=""></span></h2>
+
+    <!-- Profile -->
+    <div id="profileListContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-user"></i> Profile</h2>
+        <div id="infoContainer" class="info-container">
+            <p id="adminFullname" class="text-lg font-semibold text-gray-700"></p>
+            <p id="userFullname2" class="text-lg font-semibold text-gray-700"></p>
+            <p id="userICNumber" class="text-lg font-semibold text-gray-700"></p>
+            <p id="userEmail" class="text-lg font-semibold text-gray-700"></p>
+        </div>
+    </div>
+
+    <!-- Product List -->
+    <div id="productListContainer" class="container mx-auto hidden">
+        <h2 class="title text-3xl font-bold text-gray-900 mb-6"><i class="fa-solid fa-laptop"></i> Add Products</h2>
+        <div id="productInfoContainer" class="info-container bg-white shadow-md rounded-lg p-6">
+            <!-- Input field and button -->
+            <input type="text" id="productInp" placeholder="Enter product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+            <input type="text" id="serialInp" placeholder="Enter product serial number" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+            <button id="productBtn">Add Product</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-product">Product</th>
+                        <th class="col-serial">Serial Number</th>
+                        <th class="col-date">Date</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Product rows will be appended here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Report List -->
+    <div id="treportListContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-flag"></i> Send Report</h2>
+        <div id="sendreportContainer" class="info-container bg-white shadow-md rounded-lg p-6">
+            <!-- Dropdown to select product -->
+            <div class="relative mb-4">
+                <button id="dropdownButton" class="w-full bg-white border border-gray-300 px-4 py-2 rounded-md focus:outline-none">Select Product</button>
+                <div id="dropdownMenu" class="absolute w-full bg-white border border-gray-300 rounded-md hidden max-h-60 overflow-y-auto">
+                    <!-- Product items will be appended here -->
+                </div>
+            </div>
+            <input type="text" id="selectproductInp" placeholder="Product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" readonly>
+            <input type="text" id="serialnumberInp" placeholder="Product serial number" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" readonly>
+            <input type="text" id="reportInp" placeholder="Enter your report" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+            <button id="sendBtn">Send Report</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-tuserfullname">User Name</th>
+                        <th class="col-tproduct">Product</th>
+                        <th class="col-tserialnumber">Serial Number</th>
+                        <th class="col-treport">Report</th>
+                        <th class="col-tdate">Date</th>
+                        <th class="col-tdelete"></th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                <!-- Order rows will be appended here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Order List -->
+    <div id="orderListContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
+        <div id="infoContainer" class="info-container"></div>
+        <input type="text" id="orderInp" placeholder="Product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+        <button id="orderBtn">Order</button> 
+            <!-- Table for displaying orders -->
+            <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-userfullname">User Full Name</th>
+                    <th class="col-product">Product</th>
+                    <th class="col-approval">Approval</th>
+                    <th class="col-Deleteorder"></th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Order rows will be appended here -->
+                <thead>
+                    <tr>
+                        <th class="col-userfullname"></th>
+                        <th class="col-product"></th>
+                        <th class="col-approval"></th>
+                        <th class="col-Deleteorder"></th>
+                    </tr>
+                </thead>
+                <tbody id="approvedTableBody"></tbody>
+            </tbody>
+        </table>
+    </div>
+    
+
+
+    <!-- Feedback -->
+    <div id="feedbackContainer" class="hidden container">
+        <h2 class="title"><i class="fa-regular fa-comment"></i> Chat</h2>
+        <div id="infoContainer" class="info-container"></div>
+        <div class="input-container">
+            <div id="chatContainer" class="chat-container"></div>
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+
+<!-- Contact Us -->
+<div id="contactusContainer" class="hidden container">
+    <h2 class="title"><i class="fa-solid fa-phone"></i> Contact Us</h2>
+    <div id="infoContainer" class="info-container">
+        <h3>Customer Support</h3>
+        <p>If you have any questions or need assistance, please feel free to reach out to our customer support team. We are here to help you with any issues or concerns you may have.</p>
+        
+        <h3>Contact Information</h3>
+        <ul>
+            <li><strong>Email:</strong> support@edfares.com</li>
+            <li><strong>Phone:</strong> +1 (800) 123-4567</li>
+            <li><strong>Address:</strong> 1234 Admin Street, Suite 100, Admin City, AC 12345</li>
+        </ul>
+        
+        <h3>Business Hours</h3>
+        <p>Our support team is available during the following hours:</p>
+        <ul>
+            <li><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</li>
+            <li><strong>Saturday:</strong> 10:00 AM - 4:00 PM</li>
+            <li><strong>Sunday:</strong> Closed</li>
+        </ul>
+        
+        <h3>Follow Us</h3>
+        <p>Stay connected and follow us on social media for the latest updates and news:</p>
+        <ul>
+            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/edfares" target="_blank">facebook.com/edfares</a></li>
+            <li><strong>Twitter:</strong> <a href="https://www.twitter.com/edfares" target="_blank">twitter.com/edfares</a></li>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/company/edfares" target="_blank">linkedin.com/company/edfares</a></li>
+        </ul>
+    </div>
+</div>
+<!-- User Manual -->
+<div id="usermanualContainer" class="hidden container">
+    <h2 class="title"><i class="fa-regular fa-file-lines"></i> User Manual</h2>
+    <div id="infoContainer" class="info-container">
+        <h3>Welcome to the User Page</h3>
+        <p>This page is designed to provide you with all the tools and information you need to manage your products, reports, orders, and more. Below are the details for each section available on this page:</p>
+
+        <h4>Profile</h4>
+        <p>In the <strong>Profile</strong> section, you can view your personal information including your full name, IC number, and email address.</p>
+
+        <h4>Product List</h4>
+        <p>The <strong>Product List</strong> section allows you to add new products by entering the product name and serial number. You can view and manage your products in a table format.</p>
+
+        <h4>Send Report</h4>
+        <p>In the <strong>Send Report</strong> section, you can select a product, enter its serial number, and write a report. This report will be submitted for review.</p>
+
+        <h4>Order</h4>
+        <p>Use the <strong>Order</strong> section to place orders for products. Simply enter the product name and submit your order.</p>
+
+        <h4>Chat</h4>
+        <p>The <strong>Chat</strong> section provides a platform to communicate with support. You can type your message and send it directly to the support team.</p>
+
+        <h4>Contact Us</h4>
+        <p>In the <strong>Contact Us</strong> section, you can find the necessary information to get in touch with the support team for any queries or assistance.</p>
+
+        <h4>User Manual</h4>
+        <p>This section contains the user manual which provides an overview of the different sections and how to use them effectively.</p>
+
+        <h4>Buttons and Actions</h4>
+        <p>Each section can be accessed using the sidebar buttons. The system will remember your last clicked button and automatically take you to that section upon your next visit.</p>
+
+        <p>If you have any questions or need further assistance, please use the <strong>Contact Us</strong> section to get in touch with our support team.</p>
+    </div>
+</div>
+
+
+
+<!--<body class="bg-gray-100">
+    <div class="flex justify-center items-center h-screen">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full space-y-6">
+            <h2 class="text-center text-2xl font-bold mb-6">User Page</h2>
+            <div id="infoContainer" class="space-y-4">
+                <p id="adminUid" class="text-lg font-semibold"></p>
+                <p id="adminICNumber" class="text-lg font-semibold"></p>
+                <p id="adminFullname" class="text-lg font-semibold"></p>
+                <p id="userUid" class="text-lg font-semibold"></p>
+                <p id="userICNumber" class="text-lg font-semibold"></p>
+                <p id="userFullname" class="text-lg font-semibold"></p>
+            </div>
+        </div>
+    </div>-->
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getDatabase, set, onValue, get, ref, child, remove, push } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCi54RIsuF-w0-baut0GZ1yNyoMg5VsNMw",
+            authDomain: "e-dfares.firebaseapp.com",
+            databaseURL: "https://e-dfares-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "e-dfares",
+            storageBucket: "e-dfares.appspot.com",
+            messagingSenderId: "172364723669",
+            appId: "1:172364723669:web:90b88766d4ef37fffb395c",
+            measurementId: "G-H28TTTD19M"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+        const dbref = ref(db);
+
+
+        // Retrieve admin UID from localStorage
+        const usercreds = localStorage.getItem("user-creds");
+        
+
+        if (!usercreds) {
+            window.location.href = "loginuser.html";
+        }
+
+        // Retrieve admin UID from localStorage
+        const adminUid = localStorage.getItem("user-admin-uid");
+        let userFullName;
+
+        if (!adminUid) {
+            console.error("Admin UID not found in localStorage");
+        } else {
+            getAdminInfo(adminUid);
+        }
+
+
+
+            // Function to handle making an order
+            document.getElementById("orderBtn").addEventListener("click", () => {
+                const productName = document.getElementById("orderInp").value.trim();
+
+                if (productName !== "") {
+                    // Push order data to the database under admin UID
+                    const ordersRef = ref(db, `AdminsAuthList/${adminUid}/orders`);
+                    const newOrderRef = push(ordersRef);
+                    const orderData = {
+                        product: productName,
+                        date: new Date().toLocaleDateString(), // Capture the current date
+                        userFullName: userFullName, // Add user's full name
+                        status: "pending" // Add status field with value "pending"
+                    };
+                    set(newOrderRef, orderData)
+                        .then(() => {
+                            // Clear input field after submission
+                            document.getElementById("orderInp").value = "";
+                            alert("Order placed successfully.");
+                        })
+                        .catch((error) => {
+                            console.error("Error placing order: ", error);
+                        });
+                } else {
+                    alert("Please enter a product name to place an order.");
+                }
+            });
+
+            // Function to handle sending a report
+            document.getElementById("sendBtn").addEventListener("click", () => {
+                const selectedProduct = document.getElementById("selectproductInp").value.trim();
+                const serialNumber = document.getElementById("serialnumberInp").value.trim();
+                const reportText = document.getElementById("reportInp").value.trim();
+
+                if (selectedProduct !== "" && serialNumber !== "" && reportText !== "") {
+                    // Push report data to the database under admin UID
+                    const reportsRef = ref(db, `AdminsAuthList/${adminUid}/reports`);
+                    const newReportRef = push(reportsRef);
+                    const reportData = {
+                        product: selectedProduct,
+                        serial: serialNumber,
+                        report: reportText,
+                        date: new Date().toLocaleDateString(), // Capture the current date
+                        userFullName: userFullName // Add user's full name
+                    };
+                    set(newReportRef, reportData)
+                        .then(() => {
+                            // Clear input fields after submission
+                            document.getElementById("selectproductInp").value = "";
+                            document.getElementById("serialnumberInp").value = "";
+                            document.getElementById("reportInp").value = "";
+                            alert("Report sent successfully.");
+                        })
+                        .catch((error) => {
+                            console.error("Error sending report: ", error);
+                        });
+                } else {
+                    alert("Please select a product, enter a serial number, and provide a report.");
+                }
+            });
+
+            // Function to handle product submission
+            document.getElementById("productBtn").addEventListener("click", () => {
+                const productName = document.getElementById("productInp").value.trim();
+                const productSerial = document.getElementById("serialInp").value.trim();
+
+                if (productName !== "" && productSerial !== "") {
+                    // Push product data to the database under admin UID
+                    const productsRef = ref(db, `AdminsAuthList/${adminUid}/products`);
+                    const newProductRef = push(productsRef);
+                    const productData = {
+                        name: productName,
+                        serial: productSerial,
+                        date: new Date().toLocaleDateString(), // Capture the current date
+                        userFullName: userFullName
+                    };
+                    set(newProductRef, productData)
+                        .then(() => {
+                            // Clear input fields after submission
+                            document.getElementById("productInp").value = "";
+                            document.getElementById("serialInp").value = "";
+
+                            // Create element to display product
+                            const productRow = document.createElement("tr");
+                            productRow.innerHTML = `
+                                <td>${productData.name}</td>
+                                <td>${productData.serial}</td>
+                                <td>${productData.date}</td>
+                            `;
+                            // Append product to productTableBody
+                            document.getElementById("productTableBody").appendChild(productRow);
+                        })
+                        .catch((error) => {
+                            console.error("Error adding product: ", error);
+                        });
+                } else {
+                    alert("Please enter both a product name and a serial number.");
+                }
+            });
+
+
+
+            // Function to fetch and display orders with real-time updates
+            function fetchAndDisplayOrders() {
+                const ordersRef = ref(db, `AdminsAuthList/${adminUid}`);
+
+                // Listen for real-time updates
+                onValue(ordersRef, (snapshot) => {
+                    const orderTableBody = document.getElementById("orderTableBody");
+                    orderTableBody.innerHTML = ""; // Clear the table body first
+
+                    if (snapshot.exists()) {
+                        const ordersData = snapshot.val();
+                        // Loop through the different order categories
+                        for (const category in ordersData) {
+                            if (category === "orders" || category === "rejected") {
+                                const ordersCategory = ordersData[category];
+                                for (const orderKey in ordersCategory) {
+                                    const orderData = ordersCategory[orderKey];
+                                    // Create table row for each order
+                                    const orderRow = document.createElement("tr");
+                                    let statusText = "";
+                                    let statusClass = "";
+
+                                    if (category === "orders") {
+                                        statusText = "Pending";
+                                    } else if (category === "rejected") {
+                                        statusText = "Rejected";
+                                        statusClass = "rejected-text";
+                                    }
+
+                                    orderRow.innerHTML = `
+                                        <td>${orderData.userFullName}</td>
+                                        <td>${orderData.product}</td>
+                                        <td class="${statusClass}" style="text-align: center;">${statusText}</td>
+                                        <td>
+                                            <button class="delete-btn" data-order-key="${orderKey}" data-category="${category}">
+                                                <i class="fa-solid fa-trash-can delete-btn" data-order-key="${orderKey}" data-category="${category}"></i>
+                                            </button>
+                                        </td>
+                                    `;
+                                    // Append order row to orderTableBody
+                                    orderTableBody.appendChild(orderRow);
+                                }
+                            }
+                        }
+                    } else {
+                        console.log("No orders available for this admin.");
+                    }
+                }, (error) => {
+                    console.error("Error retrieving orders: ", error);
+                });
+            }
+
+            // Function to delete an order
+            function deleteOrder(category, orderKey) {
+                const orderRef = ref(db, `AdminsAuthList/${adminUid}/${category}/${orderKey}`);
+                remove(orderRef)
+                    .then(() => {
+                        console.log("Order deleted successfully");
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting order: ", error);
+                    });
+            }
+
+            // Event listener for delete buttons
+            document.addEventListener("click", function(event) {
+                const target = event.target;
+                if (target.classList.contains("delete-btn")) {
+                    const orderKey = target.dataset.orderKey;
+                    const category = target.dataset.category;
+                    if (orderKey && category) {
+                        deleteOrder(category, orderKey);
+                    } else {
+                        console.error("Missing order key or category");
+                    }
+                }
+            });
+
+            // Call fetchAndDisplayOrders to initialize the real-time data fetching
+            fetchAndDisplayOrders();
+
+
+
+            // Retrieve admin UID from localStorage
+            const admincUid = localStorage.getItem("user-admin-uid");
+            let useruFullName;
+
+            if (!admincUid) {
+                console.error("Admin UID not found in localStorage");
+            } else {
+                getAdminInfo(admincUid);
+            }
+
+            // Function to fetch and display approved orders with real-time updates
+            function fetchAndDisplayApprovedOrders() {
+                const ordersRef = ref(db, `AdminsAuthList/${adminUid}/approved`);
+
+                // Listen for real-time updates
+                onValue(ordersRef, (snapshot) => {
+                    const approvedTableBody = document.getElementById("approvedTableBody");
+                    approvedTableBody.innerHTML = ""; // Clear the table body first
+
+                    if (snapshot.exists()) {
+                        snapshot.forEach((childSnapshot) => {
+                            const orderData = childSnapshot.val();
+                            const orderId = childSnapshot.key;
+                            const orderRow = document.createElement("tr");
+                            orderRow.setAttribute('data-id', orderId);
+                            orderRow.innerHTML = `
+                                <td>${orderData.userFullName}</td>
+                                <td>${orderData.product}</td>
+                                <td class="approved-text" style="text-align: center;">Approved</td>
+                                <td></td>
+                            `;
+                            approvedTableBody.appendChild(orderRow);
+                        });
+                    } else {
+                        console.log("No orders available for this admin.");
+                    }
+                }, (error) => {
+                    console.error("Error retrieving approved orders: ", error);
+                });
+            }
+
+            // Call fetchAndDisplayApprovedOrders to initialize the real-time data fetching
+            fetchAndDisplayApprovedOrders();
+
+
+
+            // Function to fetch and display products under admin UID with serial numbers
+            function fetchAndDisplayProducts() {
+                const adminProductsRef = ref(db, `AdminsAuthList/${adminUid}/products`);
+
+                // Listen for real-time updates
+                onValue(adminProductsRef, (snapshot) => {
+                    const productTableBody = document.getElementById("productTableBody");
+                    productTableBody.innerHTML = ""; // Clear the table body first
+
+                    if (snapshot.exists()) {
+                        snapshot.forEach((childSnapshot) => {
+                            const productData = childSnapshot.val();
+                            // Create element to display product
+                            const productRow = document.createElement("tr");
+                            productRow.innerHTML = `
+                                <td>${productData.name}</td>
+                                <td>${productData.serial}</td>
+                                <td>${productData.date}</td>
+                            `;
+                            // Append product to productTableBody
+                            productTableBody.appendChild(productRow);
+                        });
+                    } else {
+                        console.log("No products available for this admin.");
+                    }
+                }, (error) => {
+                    console.error("Error retrieving products: ", error);
+                });
+            }
+
+            // Fetch and display products when the page loads
+            fetchAndDisplayProducts();
+
+            // Function to display products in dropdown
+            function displayProductsInDropdown(products) {
+                const dropdownMenu = document.getElementById("dropdownMenu");
+                dropdownMenu.innerHTML = ""; // Clear any existing items
+
+                products.forEach((product) => {
+                    const dropdownItem = document.createElement("div");
+                    dropdownItem.classList.add("px-4", "py-2", "hover:bg-gray-100", "cursor-pointer");
+                    dropdownItem.textContent = `${product.name} (${product.serial})`;
+                    dropdownItem.addEventListener("click", () => {
+                        // Set selected product and serial number to input fields
+                        document.getElementById("selectproductInp").value = product.name;
+                        document.getElementById("serialnumberInp").value = product.serial;
+                        dropdownMenu.classList.add("hidden");
+                    });
+                    dropdownMenu.appendChild(dropdownItem);
+                });
+            }
+
+            // Function to fetch products and display in the dropdown
+            function fetchAndDisplayProductsInDropdown() {
+                const adminProductsRef = ref(db, `AdminsAuthList/${adminUid}/products`);
+
+                // Listen for real-time updates
+                onValue(adminProductsRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const products = Object.values(snapshot.val());
+                        displayProductsInDropdown(products);
+                    } else {
+                        console.log("No products available.");
+                    }
+                }, (error) => {
+                    console.error("Error fetching products:", error);
+                });
+            }
+
+            // Fetch and display products in the dropdown when the page loads
+            fetchAndDisplayProductsInDropdown();
+
+            // Show/hide dropdown menu
+            document.getElementById("dropdownButton").addEventListener("click", () => {
+                const dropdownMenu = document.getElementById("dropdownMenu");
+                dropdownMenu.classList.toggle("hidden");
+            });
+
+
+            // Function to fetch and display reports with real-time updates
+            function fetchReports() {
+                const adminUid = localStorage.getItem("user-admin-uid");
+                if (!adminUid) {
+                    console.log("Admin UID not found");
+                    return;
+                }
+
+                const reportsRef = ref(db, `AdminsAuthList/${adminUid}/reports`);
+
+                // Listen for real-time updates
+                onValue(reportsRef, (snapshot) => {
+                    const reportTableBody = document.getElementById("reportTableBody");
+                    reportTableBody.innerHTML = ""; // Clear the table body first
+
+                    if (snapshot.exists()) {
+                        snapshot.forEach((childSnapshot) => {
+                            const reportData = childSnapshot.val();
+                            const reportId = childSnapshot.key;
+                            const row = document.createElement("tr");
+
+                            const userFullNameCell = document.createElement("td");
+                            userFullNameCell.textContent = reportData.userFullName || "N/A";
+                            row.appendChild(userFullNameCell);
+
+                            const productCell = document.createElement("td");
+                            productCell.textContent = reportData.product || "N/A";
+                            row.appendChild(productCell);
+
+                            const serialNumberCell = document.createElement("td");
+                            serialNumberCell.textContent = reportData.serial || "N/A";
+                            row.appendChild(serialNumberCell);
+
+                            const reportCell = document.createElement("td");
+                            reportCell.textContent = reportData.report || "N/A";
+                            row.appendChild(reportCell);
+
+                            const dateCell = document.createElement("td");
+                            dateCell.textContent = reportData.date || "N/A";
+                            row.appendChild(dateCell);
+
+                            const deleteCell = document.createElement("td");
+                            deleteCell.style.textAlign = "center";
+
+                            const deleteButton = document.createElement("button");
+                            deleteButton.className = "delete-btn";
+                            deleteButton.addEventListener("click", () => deleteReport(reportId));
+
+                            const trashIcon = document.createElement("i");
+                            trashIcon.className = "fa-solid fa-trash-can";
+
+                            deleteButton.appendChild(trashIcon);
+                            deleteCell.appendChild(deleteButton);
+                            row.appendChild(deleteCell);
+
+                            reportTableBody.appendChild(row);
+                        });
+                    } else {
+                        console.log("No data available");
+                    }
+                }, (error) => {
+                    console.error("Error fetching reports:", error);
+                });
+            }
+
+            // Function to delete a report
+            function deleteReport(reportId) {
+                const adminUid = localStorage.getItem("user-admin-uid");
+                if (!adminUid) {
+                    console.log("Admin UID not found");
+                    return;
+                }
+
+                const reportRef = ref(db, `AdminsAuthList/${adminUid}/reports/${reportId}`);
+                remove(reportRef)
+                    .then(() => {
+                        console.log("Report deleted successfully");
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting report:", error);
+                    });
+            }
+
+            // Call fetchReports to initialize the real-time data fetching
+            fetchReports();
+
+
+
+        
+
+        function getAdminInfo(adminUid) {
+            const adminRef = ref(db, `AdminsAuthList/${adminUid}`);
+            get(child(adminRef, 'adminicnumber')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const adminicnumber = snapshot.val();
+                    // Save admin's IC number in local storage
+                    localStorage.setItem("user-admin-icnumber", adminicnumber);
+                    return adminicnumber;
+                } else {
+                    console.log("No data available");
+                    return null;
+                }
+            }).then((adminicnumber) => {
+                get(child(adminRef, 'adminfullname')).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const adminfullname = snapshot.val();
+                        // Save admin's full name in local storage
+                        localStorage.setItem("user-admin-fullname", adminfullname);
+                        // Display admin UID and user's IC number and full name
+                        document.getElementById("adminFullname").textContent = `Admin: ${adminfullname}`;
+                    } else {
+                        console.log("No data available");
+                    }
+                });
+            });
+        }
+
+
+        if (!adminUid) {
+            console.error("Admin UID not found in localStorage");
+        }
+
+        // Check if admin UID exists in localStorage
+        if (adminUid) {
+            // Call the function to get admin info
+            getAdminInfo(adminUid);
+        } else {
+            console.log("Admin UID not found in localStorage");
+        }
+
+        // Retrieve data from localStorage
+        const userInfo = JSON.parse(localStorage.getItem("user-info"));
+        const userCreds = JSON.parse(localStorage.getItem("user-creds"));
+
+        // Check if data exists in localStorage
+        if (adminUid && userInfo && userCreds) {
+            document.getElementById("userICNumber").textContent = `Ic: ${userInfo.usericnumber}`;
+            document.getElementById("userFullname").textContent = `${userInfo.userfullname}`;
+            document.getElementById("userFullname2").textContent = `Name: ${userInfo.userfullname}`;
+            document.getElementById("userEmail").textContent = `Email: ${userCreds.email}`;
+             // Store user's full name
+            userFullName = userInfo.userfullname;
+        }
+                
+            document.getElementById('sendButton').addEventListener('click', () => {
+            const chatInput = document.getElementById('chatInput').value;
+            if (chatInput.trim() !== '') {
+                const chatRef = ref(db, `AdminsAuthList/${adminUid}/Chat`);
+                push(chatRef, {
+                    message: chatInput,
+                    chatName: userFullName,
+                    timestamp: Date.now()
+                }).then(() => {
+                    document.getElementById('chatInput').value = ''; // Clear input field after sending
+                    console.log('Message sent successfully');
+                    setTimeout(scrollToBottom, 100); // Auto-scroll to bottom after sending
+                }).catch((error) => {
+                    console.error('Error sending message:', error);
+                });
+            }
+        });
+
+        const chatContainer = document.getElementById('chatContainer');
+        const chatRef = ref(db, `AdminsAuthList/${adminUid}/Chat`);
+
+        onValue(chatRef, (snapshot) => {
+            const messages = snapshot.val();
+            chatContainer.innerHTML = ''; // Clear previous chat messages
+            for (const messageId in messages) {
+                const messageData = messages[messageId];
+                const chatTextarea = document.createElement('textarea');
+                chatTextarea.classList.add('chat-textarea');
+                chatTextarea.readOnly = true;
+                chatTextarea.value = `${messageData.chatName}: ${messageData.message}`;
+                chatContainer.appendChild(chatTextarea);
+            }
+            setTimeout(scrollToBottom, 100); // Auto-scroll to bottom after loading messages
+        });
+
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+ 
+
+        document.getElementById("showProfile").addEventListener("click", () => {
+            document.getElementById("profileListContainer").classList.remove("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+            document.getElementById("productListContainer").classList.add("hidden");
+        });
+
+        document.getElementById("showReportList").addEventListener("click", () => {
+            document.getElementById("treportListContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+
+            // Fetch reports when the Report List button is clicked
+            fetchReports();
+        });
+
+        document.getElementById("showOrderList").addEventListener("click", () => {
+            document.getElementById("orderListContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+            document.getElementById("productListContainer").classList.add("hidden");
+        });
+
+        
+        document.getElementById("showFeedback").addEventListener("click", () => {
+            document.getElementById("feedbackContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+            document.getElementById("productListContainer").classList.add("hidden");
+        });
+
+        document.getElementById("showContactus").addEventListener("click", () => {
+            document.getElementById("contactusContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+            document.getElementById("productListContainer").classList.add("hidden");
+        });
+
+        document.getElementById("showUsermanual").addEventListener("click", () => {
+            document.getElementById("usermanualContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("productListContainer").classList.add("hidden");
+        });
+
+        document.getElementById("showProductList").addEventListener("click", () => {
+            document.getElementById("productListContainer").classList.remove("hidden");
+            document.getElementById("profileListContainer").classList.add("hidden");
+            document.getElementById("treportListContainer").classList.add("hidden");
+            document.getElementById("orderListContainer").classList.add("hidden");
+            document.getElementById("feedbackContainer").classList.add("hidden");
+            document.getElementById("contactusContainer").classList.add("hidden");
+            document.getElementById("usermanualContainer").classList.add("hidden");
+        });
+
+
+        // Sidebar navigation
+        const sections = {
+                    showProfile: "profileListContainer",
+                    showProductList: "productListContainer",
+                    showReportList: "treportListContainer",
+                    showOrderList: "orderListContainer",
+                    showFeedback: "feedbackContainer",
+                    showContactus: "contactusContainer",
+                    showUsermanual: "usermanualContainer",
+                };
+
+                Object.keys(sections).forEach(buttonId => {
+                    document.getElementById(buttonId).addEventListener("click", () => {
+                        Object.values(sections).forEach(sectionId => {
+                            document.getElementById(sectionId).classList.add("hidden");
+                        });
+                        document.getElementById(sections[buttonId]).classList.remove("hidden");
+                    });
+                });
+
+
+        // Function to handle sign out
+        document.getElementById("signoutbutton").addEventListener("click", () => {
+            // Clear specific items from localStorage
+            localStorage.removeItem("user-admin-icnumber");
+            localStorage.removeItem("user-creds");
+            localStorage.removeItem("user-admin-fullname");
+            localStorage.removeItem("user-admin-uid");
+            localStorage.removeItem("user-info");
+            localStorage.removeItem("UserlastClickedButton");
+            
+            // Redirect to login page
+            window.location.href = "loginuser.html";
+        });
+
+    </script>
+</body>
+
+</html>

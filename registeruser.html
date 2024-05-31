@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register User</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Link to the custom styles.css file -->
+  <link href="rlstyles.css" rel="stylesheet">
+</head>
+
+<header class="headertop bg-blue-900 text-white p-5">
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-2xl font-bold">E-DFARES Admin <span id="admin-name2"></span></h1>
+      <nav>
+          <ul class="flex space-x-4">
+            <li><a href="home.html" class="hover:underline">Home</a></li>            </ul>
+          </ul>
+      </nav>
+  </div>
+</header>
+<footer class="footerbtm bg-blue-900 text-white p-5">
+<p>&copy; 2024 E-DFARES. All rights reserved.</p>
+</footer>
+
+<body class="bg-blue-50">
+  <div class="parent-container flex justify-center items-center h-4/5 mt-10">
+  <!-- Main container for the registration form -->
+  <div class="form-container">
+    <!-- Form heading -->
+    <h2 class="form-heading"><i class="fa-solid fa-user"></i> Register User</h2>
+    <!-- Form content -->
+    <form id="MainForm" class="form-content">
+      <!-- Ic and Full name input group -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Ic Number input -->
+        <div class="form-group">
+          <label for="uicInp" class="form-label">Ic Number</label>
+          <input type="text" id="uicInp" class="form-input" placeholder="Ic Number">
+        </div>
+        <!-- Full Name input -->
+        <div class="form-group">
+          <label for="ufnameInp" class="form-label"><i class="fa-regular fa-address-card"></i> Full Name</label>
+          <input type="text" id="ufnameInp" class="form-input" placeholder="Full Name">
+        </div>
+      </div>
+      <!-- Email input group -->
+      <div class="form-group">
+        <label for="emailInp" class="form-label"><i class="fa-regular fa-envelope"></i> Email address</label>
+        <input type="email" id="emailInp" class="form-input" placeholder="name@example.com">
+      </div>
+      <!-- Password input group -->
+      <div class="form-group">
+        <label for="passwordInp" class="form-label"><i class="fa-solid fa-lock"></i> New Password</label>
+        <div class="relative">
+          <input type="password" id="passwordInp" class="form-input" placeholder="Password">
+          <button type="button" id="togglePassword" class="inset-y-0 toggle-password">Show</button>
+        </div>
+      </div>
+      <!-- Submit button -->
+      <button type="submit" class="submit-btn">Register New Account</button>
+      <!-- Link to login page -->
+      <a href="loginuser.html" class="signin-btn">Already Have Account? Login</a>
+    </form>
+  </div>
+
+  <script>
+    const togglePasswordButton = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('passwordInp');
+
+    togglePasswordButton.addEventListener('click', function () {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getDatabase, ref, set, child, get } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCi54RIsuF-w0-baut0GZ1yNyoMg5VsNMw",
+      authDomain: "e-dfares.firebaseapp.com",
+      databaseURL: "https://e-dfares-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "e-dfares",
+      storageBucket: "e-dfares.appspot.com",
+      messagingSenderId: "172364723669",
+      appId: "1:172364723669:web:90b88766d4ef37fffb395c",
+      measurementId: "G-H28TTTD19M"
+    };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const userInfo = JSON.parse(localStorage.getItem('admin-info'));
+  const userCreds = JSON.parse(localStorage.getItem('admin-creds'));
+
+  if (userInfo && userCreds) {
+    const uid = userCreds.uid;
+    const adminICNumber = userInfo.adminicnumber;
+    const adminFullName = userInfo.adminfullname;
+
+    // Display the admin information below each other
+    document.getElementById('admin-name2').textContent = ` ${adminFullName}`;
+
+    let EmailInp = document.getElementById('emailInp');
+    let PassInp = document.getElementById('passwordInp');
+    let UIcInp = document.getElementById('uicInp');
+    let UFnameInp = document.getElementById('ufnameInp');
+    let MainForm = document.getElementById('MainForm');
+
+    const RegisterUser = (evt) => {
+      evt.preventDefault();
+
+      const adminUid = localStorage.getItem('admin-uid');
+
+      if (!adminUid) {
+        alert('Admin UID not found. Please try again.');
+        return;
+      }
+
+      createUserIfAdminExists(adminUid);
+    };
+
+    function createUserIfAdminExists(adminUid) {
+      // Admin UID exists, proceed with user registration
+      createUserWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+        .then((credentials) => {
+          const userUid = credentials.user.uid;
+
+          // Continue with saving user data under the admin UID
+          saveUserData(adminUid, userUid);
+        })
+        .catch((error) => {
+          alert(error.message);
+          console.error('Authentication error:', error.code, error.message);
+        });
+    }
+
+    function saveUserData(adminUid, userUid) {
+      // Retrieve the admin UID from the database
+      get(child(ref(db), `AdminsAuthList/${adminUid}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          // Save the new user under the admin UID
+          set(ref(db, `AdminsAuthList/${adminUid}/UsersAuthList/${userUid}`), {
+            usericnumber: UIcInp.value,
+            userfullname: UFnameInp.value
+          })
+          .then(() => {
+            alert('User registered successfully');
+            window.location.href = 'loginuser.html';
+          })
+          .catch((error) => {
+            alert('Error saving user data: ' + error.message);
+            console.error('Database write error:', error);
+          });
+        } else {
+          alert('Admin UID not found in the database.');
+        }
+      }).catch((error) => {
+        alert('Error fetching admin UID: ' + error.message);
+        console.error('Database read error:', error);
+      });
+    }
+
+    MainForm.addEventListener('submit', RegisterUser);
+  } else {
+    alert('Admin information not found. Please log in again.');
+    window.location.href = 'adminlogin.html';
+  }
+});
+
+  </script>
+</body>
+</html>

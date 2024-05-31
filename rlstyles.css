@@ -1,0 +1,166 @@
+/* Form Container */
+
+.parent-container {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    min-height: 80vh; /* Full viewport height */
+}
+#admin-name2 {
+    color: #d1d1ff;
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.516); /* Keep the same color for fallback */
+    backdrop-filter: blur(5px); /* Add blur effect */
+    padding: 2rem; /* Padding */
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Shadow */
+    width: 100%; /* Full width */
+    max-width: 28rem; /* Maximum width */
+    justify-content: center;
+    margin-top: -100px;
+    position: absolute;
+}
+
+.MainForm {
+    background-color: rgb(255, 255, 255); /* White background */
+    padding: 2rem; /* Padding */
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Shadow */
+    width: 100%; /* Full width */
+    max-width: 28rem; /* Maximum width */
+}
+
+.footerbtm {
+    bottom: 0;
+    position: fixed;
+    min-width: 100%;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: -20px;
+    font-size: 12px;
+    box-shadow: 0 -5px 4px rgba(0, 0, 0, 0.208)
+}
+
+.footerbtm p {
+    margin-top: -15px; /* Added margin-top for the text */
+}
+
+.headertop {
+    margin-top: -15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.313)
+}
+
+#forgotpasslabel {
+    font-size: 13px;
+    margin-bottom: -10px;
+}
+
+#forgotpasslabel:hover {
+    color: rgb(0, 0, 123);
+    font-size: 13.1px;
+}
+/* Form Heading */
+.form-heading {
+    font-size: 1.5rem; /* Font size */
+    font-weight: 700; /* Bold font */
+    text-align: center; /* Centered text */
+    margin-bottom: 1.5rem; /* Bottom margin */
+}
+
+/* Form Content */
+.form-content {
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Vertical direction */
+    gap: 1.5rem; /* Gap between items */
+}
+
+/* Form Group */
+.form-group {
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Vertical direction */
+    gap: 0.5rem; /* Gap between items */
+}
+
+/* Form Label */
+.form-label {
+    font-size: 0.875rem; /* Font size */
+    font-weight: 500; /* Medium font weight */
+    color: #4a5568; /* Text color */
+}
+
+/* Form Input */
+.form-input {
+    margin-top: 0.25rem; /* Top margin */
+    display: block; /* Block display */
+    width: 100%; /* Full width */
+    padding: 0.75rem; /* Padding */
+    border: 1px solid #d2d6dc; /* Border */
+    border-radius: 0.375rem; /* Rounded corners */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Shadow */
+    font-size: 0.875rem; /* Font size */
+}
+
+.form-input:focus {
+    outline: none; /* No outline */
+    border-color: #6366f1; /* Border color on focus */
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Shadow on focus */
+}
+
+/* Toggle Password Button */
+.toggle-password {
+    position: absolute; /* Absolute positioning */
+    right: 0; /* Right inset */
+    padding-right: 0.75rem; /* Right padding */
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Centered items */
+    font-size: 0.875rem; /* Font size */
+    line-height: 1.25; /* Line height */
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%; /* Full width */
+    padding: 0.5rem 1rem; /* Padding */
+    background-color: #f97316; /* Background color */
+    color: white; /* Text color */
+    font-weight: 700; /* Bold font */
+    border-radius: 0.375rem; /* Rounded corners */
+    text-align: center; /* Centered text */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.submit-btn:hover {
+    background-color: #ea580c; /* Background color on hover */
+    font-size: 17px;
+}
+
+.submit-btn:focus {
+    outline: none; /* No outline */
+}
+
+/* Sign In Button */
+.signin-btn {
+    width: 100%; /* Full width */
+    display: inline-block; /* Inline block display */
+    text-align: center; /* Centered text */
+    padding: 0.3rem 1rem; /* Padding */
+    margin-top: -1rem; /* Top margin */
+    background-color: #4a5568cb; /* Background color */
+    color: white; /* Text color */
+    font-weight: 700; /* Bold font */
+    border-radius: 0.375rem; /* Rounded corners */
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.signin-btn:hover {
+    background-color: #2d3748c4; /* Background color on hover */
+    font-size: 14.5px;
+}
+
+.signin-btn:focus {
+outline: none; /* No outline */
+    box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.5); /* Shadow on focus */
+}

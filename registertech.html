@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register Technician</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Link to the custom styles.css file -->
+  <link href="rlstyles.css" rel="stylesheet">
+</head>
+
+<header class="headertop bg-blue-900 text-white p-5">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">E-DFARES Admin <span id="admin-name2"></span></h1>
+      <nav>
+            <ul class="flex space-x-4">
+              <li><a href="home.html" class="hover:underline">Home</a></li>            </ul>
+            </ul>
+        </nav>
+    </div>
+</header>
+<footer class="footerbtm bg-blue-900 text-white p-5">
+  <p>&copy; 2024 E-DFARES. All rights reserved.</p>
+</footer>
+
+<body class="bg-blue-50"></body>
+<div class="parent-container flex justify-center items-center h-4/5 mt-10">
+    <div class="form-container">
+    <h2 class="form-heading"><i class="fa-solid fa-user-gear"></i> Register Technician</h2>
+    <form id="MainForm" class="form-content">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="form-group">
+          <label for="ticInp" class="form-label">Ic Number</label>
+          <input type="text" id="ticInp" class="form-input" placeholder="Ic Number">
+        </div>
+        <!-- Full Name input -->
+        <div class="form-group">
+          <label for="tfnameInp" class="form-label"><i class="fa-regular fa-address-card"></i> Full Name</label>
+          <input type="text" id="tfnameInp" class="form-input" placeholder="Full Name">
+        </div>
+      </div>
+      <!-- Email input group -->
+      <div class="form-group">
+        <label for="emailInp" class="form-label"><i class="fa-regular fa-envelope"></i> Email address</label>
+        <input type="email" id="emailInp" class="form-input" placeholder="name@example.com">
+      </div>
+      <!-- Password input group -->
+      <div class="form-group">
+        <label for="passwordInp" class="form-label"><i class="fa-solid fa-lock"></i> New Password</label>
+        <div class="relative">
+          <input type="password" id="passwordInp" class="form-input" placeholder="Password">
+          <button type="button" id="togglePassword" class="inset-y-0 toggle-password">Show</button>
+        </div>
+      </div>
+      <!-- Submit button -->
+      <button type="submit" class="submit-btn">Register New Account</button>
+      <!-- Link to login page -->
+      <a href="logintech.html" class="signin-btn">Already Have Account? Login</a>
+      </form>
+  </div>
+
+  <script>
+    const togglePasswordButton = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('passwordInp');
+
+    togglePasswordButton.addEventListener('click', function () {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getDatabase, ref, set, child, get } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCi54RIsuF-w0-baut0GZ1yNyoMg5VsNMw",
+      authDomain: "e-dfares.firebaseapp.com",
+      databaseURL: "https://e-dfares-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "e-dfares",
+      storageBucket: "e-dfares.appspot.com",
+      messagingSenderId: "172364723669",
+      appId: "1:172364723669:web:90b88766d4ef37fffb395c",
+      measurementId: "G-H28TTTD19M"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+    const auth = getAuth(app);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Retrieve admin info and credentials from localStorage
+      const userInfo = JSON.parse(localStorage.getItem('admin-info'));
+      const userCreds = JSON.parse(localStorage.getItem('admin-creds'));
+
+      if (userInfo && userCreds) {
+        const uid = userCreds.uid;
+        const adminICNumber = userInfo.adminicnumber;
+        const adminFullName = userInfo.adminfullname;
+
+        // Display the admin information
+        document.getElementById('admin-name2').textContent = ` ${adminFullName}`;
+      } else {
+        // Handle case where admin info is not available
+        alert('Admin info not found');
+        return;
+      }
+
+      // Get references to the form elements
+      const EmailInp = document.getElementById('emailInp');
+      const PassInp = document.getElementById('passwordInp');
+      const TIcInp = document.getElementById('ticInp');
+      const TFnameInp = document.getElementById('tfnameInp');
+      const MainForm = document.getElementById('MainForm');
+
+      // Define the function to register a technician
+      const RegisterTechnician = (evt) => {
+        evt.preventDefault();
+
+        const adminUid = localStorage.getItem('admin-uid'); // Retrieve admin UID from localStorage
+
+        if (adminUid) {
+          // Admin UID exists in localStorage
+          console.log('Admin UID:', adminUid);
+
+          createUserWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+            .then((credentials) => {
+              const techUid = credentials.user.uid;
+
+              // Retrieve the admin UID from the database
+              get(child(ref(db), `AdminsAuthList/${adminUid}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                  // Save the new technician under the admin UID
+                  set(ref(db, `AdminsAuthList/${adminUid}/TechAuthList/${techUid}`), {
+                    techicnumber: TIcInp.value,
+                    techfullname: TFnameInp.value,
+                  })
+                  .then(() => {
+                    alert('Technician registered successfully');
+                    window.location.href = 'logintech.html';
+                  })
+                  .catch((error) => {
+                    alert('Error saving technician data: ' + error.message);
+                    console.error('Database write error:', error);
+                  });
+                } else {
+                  alert('Admin UID not found in the database.');
+                }
+              }).catch((error) => {
+                alert('Error fetching admin UID: ' + error.message);
+                console.error('Database read error:', error);
+              });
+            })
+            .catch((error) => {
+              alert('Error creating user: ' + error.message);
+              console.error('Authentication error:', error.code, error.message);
+            });
+        } else {
+          // Admin UID does not exist in localStorage
+          alert('Admin UID not found');
+        }
+      };
+
+      // Attach the event listener to the form
+      MainForm.addEventListener('submit', RegisterTechnician);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<style>
+    .container {
+        max-width: 100%;
+    }
+
+    .box {
+        width: 400px;
+        height: 200px;
+        background-color: rgb(236, 236, 255) ;
+        margin: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.3s;
+        border-radius: 10px;
+        perspective: 1000px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .box:hover {
+        transform: rotateY(10deg) rotateX(10deg) scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .box p {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .box span {
+        font-size: 25px;
+        font-weight: normal;
+        margin-left: 5px;
+    }
+
+    .footerbtm {
+        bottom: 0;
+        position: fixed;
+        min-width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: -20px;
+        z-index: 5;
+        font-size: 12px;
+        box-shadow: 0 -5px 4px rgba(0, 0, 0, 0.208)
+    }
+
+    .footerbtm p {
+        margin-top: -25px; /* Added margin-top for the text */
+    }
+
+@media (max-width: 768px) {
+    .containerbox {
+        display: flex;
+        flex-direction: column; /* Stack boxes vertically */
+        align-items: center; /* Center boxes horizontally */
+    }
+
+    .box {
+        width: 90%; /* Adjust width to fit container */
+        height: 150px;
+        margin: 20px 0; /* Adjust margin for spacing */
+    }
+}
+</style>
+
+<body class="bg-gray-100">
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="container bg-blue-900 mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-bold text-white">E-DFARES</a>
+                <!-- Navigation Links -->
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="index.html" class="text-white hover:text-gray-400">Home</a></li>
+                    <li><a href="about.html" class="text-white hover:text-gray-400">About</a></li>
+                    <li><a href="usermanual.html" class="text-white hover:text-gray-400">Manual</a></li>
+                    <li><a href="contact.html" class="text-white hover:text-gray-400">Contact</a></li>
+                </ul>
+                <!-- Mobile Menu Button (Hidden on larger screens) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu (Initially hidden) -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white">
+            <ul class="py-2">
+                <li><a href="index.html" class="block px-4 py-2 text-gray-600 hover:text-gray-800">Home</a></li>
+                <li><a href="about.html" class="block px-4 py-2 text-gray-600 hover:text-gray-800">About</a></li>
+                <li><a href="usermanual.html" class="block px-4 py-2 text-gray-600 hover:text-gray-800">Manual</a></li>
+                <li><a href="contact.html" class="block px-4 py-2 text-gray-600 hover:text-gray-800">Contact</a></li>
+            </ul>
+        </div>       
+    </nav>
+
+    <!-- Content Area -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Your content goes here -->
+        <h1 class="text-4xl font-bold text-blue-900">Welcome to E-DFARES</h1>
+        <div class="containerbox mx-auto px-4 py-8 flex justify-center">
+            <!-- Box 1 -->
+            <a href="userpage.html" class="box">
+                <p><i class="fa-solid fa-user"></i> User : <span id="userFullName"></span></p>
+            </a>
+            <!-- Box 2 -->
+            <a href="adminpage.html" class="box">
+                <p><i class="fa-solid fa-user-tie"></i> Admin : <span id="adminFullName"></span></p>
+            </a>
+            <!-- Box 3 -->
+            <a href="techpage.html" class="box">
+                <p><i class="fa-solid fa-user-gear"></i> Tech : <span id="techFullName"></span></p>
+            </a>
+        </div>
+    </div>
+    <footer class="footerbtm bg-blue-900 text-white p-8">
+        <p>&copy; 2024 E-DFARES. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch user info from local storage
+            const userFullName = localStorage.getItem("user-info");
+            if (userFullName) {
+                const userJson = JSON.parse(userFullName);
+                document.getElementById("userFullName").textContent = userJson.userfullname;
+            }
+
+            // Fetch admin info from local storage
+            const adminFullName = localStorage.getItem("admin-info");
+            if (adminFullName) {
+                const adminJson = JSON.parse(adminFullName);
+                document.getElementById("adminFullName").textContent = adminJson.adminfullname;
+            }
+
+            // Fetch tech info from local storage
+            const techFullName = localStorage.getItem("tech-info");
+            if (techFullName) {
+                const techJson = JSON.parse(techFullName);
+                document.getElementById("techFullName").textContent = techJson.techfullname;
+            }
+        });
+    </script>
+
+    <!-- JavaScript for Mobile Menu Toggle -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>
