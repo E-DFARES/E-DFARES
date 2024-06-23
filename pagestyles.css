@@ -617,3 +617,39 @@ td {
     color: #ff1d1d;
     transform: translateY(-8px);
 }
+
+/* refresh button ------------------------------------------------------------------------------------------*/
+
+.refresh-button {
+    border: none;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+    outline: none;
+    transition: transform 0.1s;
+    float: right;
+}
+.refresh-button i {
+    font-size: 24px;
+}
+
+.refresh-button:hover {
+    color: #2c2c2c;
+}
+
+.refresh-button:active {
+    transform: scale(0.5);
+    color: #353535;
+}
+
+.spin {
+    animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(180deg); }
+}

@@ -12,6 +12,22 @@
     <link rel="stylesheet" href="pagestyles.css">
 </head>
 
+<script>
+    window.onload = function() {
+        // Check if the URL already has the 'refreshed' parameter
+        if (!window.location.search.includes('refreshed=true')) {
+            // Add the 'refreshed' parameter to the URL
+            window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'refreshed=true';
+        }
+    }
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+    }
+
+    updateTime();
+</script>
+
 <body class="bg-gray-100">
     <header class="headertop bg-blue-900 text-white p-5">
     <div class="containerhh mx-auto flex justify-between items-center">
@@ -40,7 +56,7 @@
             <button id="showUsermanual" data-specific-id="amanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
             <button id="registerUserBtn">Register User</button>
             <button id="registerTechBtn">Register Technician</button>
-            <button id="signoutbutton"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
+            <li><a href="index.html" class="hover:underline"><i class="fa-solid fa-house"></i> Home</a></li>
         </div>
 
         <script>
@@ -172,7 +188,7 @@
     </table>
   </div>
 
-    <!-- Feedback -->
+    <!-- Chat -->
     <div id="feedbackContainer" class="hidden container">
         <h2 class="title"><i class="fa-regular fa-comment"></i> Chat</h2>
         <div id="infoContainer" class="info-container"></div>
@@ -211,6 +227,7 @@
             <li><strong>Facebook:</strong> <a href="https://www.facebook.com/edfares" target="_blank">facebook.com/edfares</a></li>
             <li><strong>Twitter:</strong> <a href="https://www.twitter.com/edfares" target="_blank">twitter.com/edfares</a></li>
             <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/company/edfares" target="_blank">linkedin.com/company/edfares</a></li>
+            <li><strong>Whatsapp:</strong> <a href="https://www.linkedin.com/company/edfares" target="_blank">Whatsapp Dfares</a></li>
         </ul>
     </div>
 </div>
@@ -602,6 +619,9 @@
         }
     });
 
+    
+
+    // Approve button function -------------------------------------
     function handleApprove(orderRow) {
         const orderData = getOrderData(orderRow, 'approved');
         const approvedRef = ref(db, `AdminsAuthList/${adminUid}/approved`);
@@ -614,6 +634,9 @@
             console.error("Error approving order: ", error);
         });
     }
+    // Approve button function -------------------------------------
+
+
 
     function handleReject(orderRow) {
         const orderData = getOrderData(orderRow, 'rejected');
@@ -649,7 +672,7 @@
             const adminemail = adminCreds.email;
 
             // Display the admin information below each other
-            document.getElementById('user-uid').textContent = `Id: ${uid}`;
+            document.getElementById('user-uid').textContent = `${uid}`;
             document.getElementById('admin-ic').textContent = `Ic: ${adminICNumber}`;
             document.getElementById('admin-name').textContent = `Name: ${adminFullName}`;
             document.getElementById('admin-name2').textContent = ` ${adminFullName}`;
@@ -659,7 +682,7 @@
             document.getElementById('sendButton').addEventListener('click', () => {
             const chatInput = document.getElementById('chatInput').value;
             if (chatInput.trim() !== '') {
-                const chatRef = ref(db, `AdminsAuthList/${adminUid}/Chat`);
+                const chatRef = ref(db, `AdminsAuthList/${uid}/Chat`);
                 push(chatRef, {
                     message: chatInput,
                     chatName: adminFullName,
@@ -675,7 +698,7 @@
         });
 
         const chatContainer = document.getElementById('chatContainer');
-        const chatRef = ref(db, `AdminsAuthList/${adminUid}/Chat`);
+        const chatRef = ref(db, `AdminsAuthList/${uid}/Chat`);
 
         // Function to create delete button for each chat message
         function createDeleteButton(messageId) {
@@ -719,7 +742,6 @@
                 chatDiv.appendChild(deleteButton);
                 chatContainer.appendChild(chatDiv);
             }
-            setTimeout(scrollToBottom, 100); // Auto-scroll to bottom after loading messages
         });
 
         function scrollToBottom() {
@@ -887,7 +909,7 @@
     localStorage.setItem("adminUID", uid);
 });
 
-    // Function to handle sign out
+    // Function sign out
     document.getElementById("signoutbutton").addEventListener("click", () => {
         // Clear specific items from localStorage
         localStorage.removeItem("admin-uid");
