@@ -34,7 +34,7 @@
     <!-- Form content -->
     <form id="MainForm" class="form-content">
       <!-- Ic Number and Full name input group -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="custom-grid">
         <!-- Ic number input -->
         <div class="form-group">
           <label for="aicInp" class="form-label">Ic Number</label>
@@ -44,6 +44,16 @@
         <div class="form-group">
           <label for="afnameInp" class="form-label"><i class="fa-regular fa-address-card"></i> Name</label>
           <input type="text" id="afnameInp" class="form-input" placeholder="Name">
+        </div>
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label for="aphoneNumber" class="form-label">Phone Number</label>
+          <input type="text" id="aphoneNumber" class="form-input" placeholder="Phone Number">
+        </div>
+        <!-- Address -->
+        <div class="form-group">
+          <label for="aaddress" class="form-label">Address</label>
+          <input type="text" id="aaddress" class="form-input" placeholder="Address">
         </div>
       </div>
       <!-- Email input group -->
@@ -104,6 +114,8 @@
     let PassInp = document.getElementById('passwordInp');
     let AIcInp = document.getElementById('aicInp');
     let AFnameInp = document.getElementById('afnameInp');
+    let APnumberInp = document.getElementById('aphoneNumber');
+    let AAddressInp = document.getElementById('aaddress');
     let MainForm = document.getElementById('MainForm');
 
     let RegisterUser = evt => {
@@ -113,9 +125,11 @@
       .then((credentials) => {
         set(ref(db, 'AdminsAuthList/' + credentials.user.uid), { // Ensure path matches login code
           adminicnumber: AIcInp.value,
-          adminfullname: AFnameInp.value
+          adminfullname: AFnameInp.value,
+          adminphonenumber: APnumberInp.value,
+          adminaddress: AAddressInp.value
         }).then(() => {
-          alert('User registered successfully');
+          alert('Admin registered successfully');
           window.location.href = 'loginadmin.html';
         }).catch((error) => {
           alert('Error saving user data: ' + error.message);

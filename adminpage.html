@@ -12,22 +12,6 @@
     <link rel="stylesheet" href="pagestyles.css">
 </head>
 
-<script>
-    window.onload = function() {
-        // Check if the URL already has the 'refreshed' parameter
-        if (!window.location.search.includes('refreshed=true')) {
-            // Add the 'refreshed' parameter to the URL
-            window.location.href = window.location.href + (window.location.search ? '&' : '?') + 'refreshed=true';
-        }
-    }
-    function updateTime() {
-        const now = new Date();
-        document.getElementById('currentTime').textContent = now.toLocaleTimeString();
-    }
-
-    updateTime();
-</script>
-
 <body class="bg-gray-100">
     <header class="headertop bg-blue-900 text-white p-5">
     <div class="containerhh mx-auto flex justify-between items-center">
@@ -35,7 +19,7 @@
 
         <nav>
             <ul class="flex space-x-4">
-                <button id="signoutbutton">Sign Out <i class="fa-solid fa-right-from-bracket"></i></button>
+            <li><a href="index.html" class="hover:underline"><i class="fa-solid fa-house"></i> Home</a></li>
             </ul>
         </nav>
     </div>
@@ -54,9 +38,11 @@
             <button id="showFeedback" data-specific-id="afeedback"><i class="fa-regular fa-comment"></i> Chat</button>
             <button id="showContactus" data-specific-id="acontact"><i class="fa-solid fa-phone"></i> Contact Us</button>
             <button id="showUsermanual" data-specific-id="amanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
+            <hr>
             <button id="registerUserBtn">Register User</button>
             <button id="registerTechBtn">Register Technician</button>
-            <li><a href="index.html" class="hover:underline"><i class="fa-solid fa-house"></i> Home</a></li>
+            <hr>
+            <button id="signoutbutton">Sign Out <i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
 
         <script>
@@ -108,6 +94,8 @@
             <button id="copyuidBtn" class="text-lg font-semibold text-gray-700">Copy Admin ID</button>
             <p id="admin-name" class="text-lg font-semibold text-gray-700"></p>
             <p id="admin-ic" class="text-lg font-semibold text-gray-700"></p>
+            <p id="admin-phonenumber" class="text-lg font-semibold text-gray-700"></p>
+            <p id="admin-address" class="text-lg font-semibold text-gray-700"></p>
             <p id="admin-email" class="text-lg font-semibold text-gray-700"></p>
         </div>
     </div>
@@ -127,7 +115,6 @@
                   </tr>
               </thead>
               <tbody id="productTableBody">
-                  <!-- Product rows will be appended here -->
               </tbody>
           </table>
       </div>
@@ -146,10 +133,10 @@
                   <th class="col-tserialnumber">Serial Number</th>
                   <th class="col-treport">Report</th>
                   <th class="col-tdate">Date</th>
+                  <th class="col-treport">Technician Feedback</th>
               </tr>
           </thead>
           <tbody id="reportTableBody">
-          <!-- Order rows will be appended here -->
           </tbody>
       </table>
   </div>
@@ -235,74 +222,21 @@
   <div id="usermanualContainer" class="hidden container">
     <h2 class="title"><i class="fa-regular fa-file-lines"></i> User Manual</h2>
     <div id="infoContainer" class="info-container">
-        <!-- Content for User Manual -->
-        <h3>Overview</h3>
-        <p>The Admin Page allows administrators to manage profiles, products, reports, orders, and feedback, as well as to register new users and technicians. The interface is designed to be user-friendly, with a sidebar for easy navigation and a main content area for detailed views and interactions.</p>
-
-        <h3>Header and Navigation</h3>
-        <ul>
-            <li><strong>Admin Name</strong>: The name of the logged-in admin is displayed dynamically.</li>
-            <li><strong>Sign Out Button</strong>: Click this button to sign out of the admin portal.</li>
-        </ul>
-
-        <h3>Sidebar Menu</h3>
-        <p>The sidebar on the left provides quick access to various sections of the admin portal:</p>
-        <ul>
-            <li>Profile: View and manage your profile information.</li>
-            <li>Product: View and manage the product list.</li>
-            <li>Report: View and manage reports.</li>
-            <li>Order: View and manage orders.</li>
-            <li>Chat: View and manage feedback (chat).</li>
-            <li>Contact Us: View contact information.</li>
-            <li>User Manual: View the user manual.</li>
-            <li>Register User: Register a new user.</li>
-            <li>Register Technician: Register a new technician.</li>
-            <li>Sign Out: Sign out of the admin portal.</li>
-        </ul>
-
-        <h3>Profile Management</h3>
-        <ul>
-            <li><strong>Admin ID</strong>: Displayed at the top. Use the "Copy Admin ID" button to copy it to the clipboard.</li>
-            <li><strong>Admin Name, IC, and Email</strong>: Displayed below the admin ID.</li>
-        </ul>
-
-        <h3>Product Management</h3>
-        <ul>
-            <li><strong>Product List Table</strong>: Displays product details including name, serial number, and date.</li>
-            <li><strong>Delete Button</strong>: Click the trash can icon to delete a product.</li>
-        </ul>
-
-        <h3>Report Management</h3>
-        <ul>
-            <li><strong>Report List Table</strong>: Displays report details including user name, product, serial number, report, and date.</li>
-        </ul>
-
-        <h3>Order Management</h3>
-        <ul>
-            <li><strong>Order List Table</strong>: Displays order details including user name, product, and status.</li>
-            <li><strong>Approve/Reject Buttons</strong>: Click these buttons to approve or reject orders.</li>
-        </ul>
-
-        <h3>Feedback Management</h3>
-        <ul>
-            <li><strong>Chat Container</strong>: Displays the chat history.</li>
-            <li><strong>Chat Input</strong>: Type your message and click "Send" to reply to user feedback.</li>
-        </ul>
-
-        <h3>Contact Us</h3>
-        <p>In the <strong>Contact Us</strong> section, you can view contact information.</p>
-
-        <h3>User Manual</h3>
-        <p>In the <strong>User Manual</strong> section, you can view this user manual for reference.</p>
-
-        <h3>Register User</h3>
-        <p>Click the <strong>Register User</strong> button to register a new user. This will prompt you to enter the necessary details for user registration.</p>
-
-        <h3>Register Technician</h3>
-        <p>Click the <strong>Register Technician</strong> button to register a new technician. This will prompt you to enter the necessary details for technician registration.</p>
-
-        <h3>Sign Out</h3>
-        <p>Click the <strong>Sign Out</strong> button in the header or sidebar to sign out of the admin portal.</p>
+        <div class="step">
+            <ul>
+                <li><b>Register Users and Technicians</b></li>
+                <li>Admin can register new user and technician accounts.</li>
+                <br>
+                <li><b>View Added Products</b></li>
+                <li>Admin can view products added by users.</li>
+                <br>
+                <li><b>View Reports</b></li>
+                <li>Admin can view reports made by users.</li>
+                <br>
+                <li><b>Approve Orders</b></li>
+                <li>Admin needs to approve orders, which will then be sent to technicians for processing.</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -340,59 +274,62 @@
 
     // Fetch and display products under admin UID with delete button
     function fetchAndDisplayProducts() {
-    const adminProductsRef = ref(db, `AdminsAuthList/${adminUid}/products`);
+        const adminProductsRef = ref(db, `AdminsAuthList/${adminUid}/products`);
 
-    onValue(adminProductsRef, (snapshot) => {
-        const productTableBody = document.getElementById("productTableBody");
-        productTableBody.innerHTML = ''; // Clear the table before adding updated data
+        onValue(adminProductsRef, (snapshot) => {
+            const productTableBody = document.getElementById("productTableBody");
+            productTableBody.innerHTML = ''; // Clear the table before adding updated data
 
-        if (snapshot.exists()) {
-        snapshot.forEach((childSnapshot) => {
-            const productData = childSnapshot.val();
-            const productId = childSnapshot.key;
-            const productRow = document.createElement("tr");
-            productRow.setAttribute('data-id', productId);
-            productRow.innerHTML = `
-            <td>${productData.name}</td>
-            <td>${productData.serial}</td>
-            <td>${productData.date}</td>
-            <td style="text-align: center;">
-                <button class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
-            </td>
-            `;
-            productTableBody.appendChild(productRow);
+            if (snapshot.exists()) {
+                snapshot.forEach((childSnapshot) => {
+                    const productData = childSnapshot.val();
+                    const productId = childSnapshot.key;
+                    const productRow = document.createElement("tr");
+                    productRow.setAttribute('data-id', productId);
+                    productRow.innerHTML = `
+                        <td>${productData.name}</td>
+                        <td>${productData.serial}</td>
+                        <td>${productData.date}</td>
+                        <td style="text-align: center;">
+                            <button class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
+                        </td>
+                    `;
+                    productTableBody.appendChild(productRow);
+                });
+            } else {
+                console.log("No products available for this admin.");
+            }
+        }, (error) => {
+            console.error("Error retrieving products: ", error);
         });
-        } else {
-        console.log("No products available for this admin.");
-        }
-    }, (error) => {
-        console.error("Error retrieving products: ", error);
-    });
     }
 
     // Handle delete button click
     document.getElementById("productTableBody").addEventListener("click", (event) => {
-    if (event.target.classList.contains("delete-btn")) {
-        const productRow = event.target.closest("tr");
-        handleDeleteProduct(productRow);
-    }
+        if (event.target.classList.contains("delete-btn") || event.target.closest(".delete-btn")) {
+            const productRow = event.target.closest("tr");
+            handleDeleteProduct(productRow);
+        }
     });
 
     function handleDeleteProduct(productRow) {
-    const productId = productRow.dataset.id;
-    const productRef = ref(db, `AdminsAuthList/${adminUid}/products/${productId}`);
+        const productId = productRow.dataset.id;
+        const productRef = ref(db, `AdminsAuthList/${adminUid}/products/${productId}`);
 
-    remove(productRef)
-        .then(() => {
-        productRow.remove();
-        console.log("Product deleted successfully");
-        })
-        .catch((error) => {
-        console.error("Error deleting product: ", error);
-        });
+        remove(productRef)
+            .then(() => {
+                productRow.remove();
+                console.log("Product deleted successfully");
+            })
+            .catch((error) => {
+                console.error("Error deleting product: ", error);
+            });
     }
 
-    fetchAndDisplayProducts();
+    document.addEventListener("DOMContentLoaded", (event) => {
+        fetchAndDisplayProducts();
+    });
+
 
 
 
@@ -420,24 +357,28 @@
             const row = document.createElement("tr");
 
             const userFullNameCell = document.createElement("td");
-            userFullNameCell.textContent = report.userFullName || "N/A";
+            userFullNameCell.textContent = report.userFullName || "-";
             row.appendChild(userFullNameCell);
 
             const productCell = document.createElement("td");
-            productCell.textContent = report.product || "N/A";
+            productCell.textContent = report.product || "-";
             row.appendChild(productCell);
 
             const serialNumberCell = document.createElement("td");
-            serialNumberCell.textContent = report.serial || "N/A";
+            serialNumberCell.textContent = report.serial || "-";
             row.appendChild(serialNumberCell);
 
             const reportCell = document.createElement("td");
-            reportCell.textContent = report.report || "N/A";
+            reportCell.textContent = report.report || "-";
             row.appendChild(reportCell);
 
             const dateCell = document.createElement("td");
-            dateCell.textContent = report.date || "N/A";
+            dateCell.textContent = report.date || "-";
             row.appendChild(dateCell);
+
+            const editedTextCell = document.createElement("td");
+            editedTextCell.textContent = report.editedText || "-";
+            row.appendChild(editedTextCell);
 
             reportTableBody.appendChild(row);
         }
@@ -669,11 +610,15 @@
             const uid = adminCreds.uid;
             const adminICNumber = adminInfo.adminicnumber;
             const adminFullName = adminInfo.adminfullname;
+            const adminPhoneNumber = adminInfo.adminphonenumber;
             const adminemail = adminCreds.email;
+            const adminAddress = adminInfo.adminaddress;
 
             // Display the admin information below each other
             document.getElementById('user-uid').textContent = `${uid}`;
             document.getElementById('admin-ic').textContent = `Ic: ${adminICNumber}`;
+            document.getElementById('admin-phonenumber').textContent = `Phone Number: ${adminPhoneNumber}`;
+            document.getElementById('admin-address').textContent = `Address: ${adminAddress}`;
             document.getElementById('admin-name').textContent = `Name: ${adminFullName}`;
             document.getElementById('admin-name2').textContent = ` ${adminFullName}`;
             document.getElementById('admin-email').textContent = `Email: ${adminemail}`;

@@ -103,7 +103,9 @@
             console.log('User data found:', userData);  // Debugging: Log user data
             localStorage.setItem("admin-info", JSON.stringify({
               adminicnumber: userData.adminicnumber,
-              adminfullname: userData.adminfullname
+              adminfullname: userData.adminfullname,
+              adminphonenumber: userData.adminphonenumber,
+              adminaddress: userData.adminaddress,
             }));
             localStorage.setItem("admin-creds", JSON.stringify(credentials.user));
             window.location.href = 'adminpage.html';
