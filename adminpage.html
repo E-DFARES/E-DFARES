@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Link to Tailwind CSS CDN -->
+    
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Link to external CSS -->
+    
     <link rel="stylesheet" href="pagestyles.css">
 </head>
 
@@ -29,7 +29,7 @@
 </footer>
 
     <div class="flex h-screen">
-        <!-- Sidebar -->
+        
         <div class="sidebar">
             <button id="showProfile" data-specific-id="aprofile"><i class="fa-regular fa-user"></i> Profile</button>
             <button id="showProductList" data-specific-id="aproduct"><i class="fa-solid fa-laptop"></i> Product</button>
@@ -37,6 +37,7 @@
             <button id="showOrderList" data-specific-id="aorder"><i class="fa-regular fa-clipboard"></i> Order</button>
             <button id="showFeedback" data-specific-id="afeedback"><i class="fa-regular fa-comment"></i> Chat</button>
             <button id="showContactus" data-specific-id="acontact"><i class="fa-solid fa-phone"></i> Contact Us</button>
+            <button id="showUsermanual" data-specific-id="amanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
             <button id="showUsermanual" data-specific-id="amanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
             <hr>
             <button id="registerUserBtn">Register User</button>
@@ -81,7 +82,7 @@
         </script>
 
 
-        <!-- Main content -->
+        
         <div class="flex-1 p-6">
             <h2 class="technician text-2xl font-bold mb-4"><span id=""></span></h2>
 
@@ -89,7 +90,7 @@
       <div id="profileListContainer" class="hidden container">
         <h2 class="title"><i class="fa-regular fa-user"></i> Profile</h2>
         <div id="infoContainer" class="info-container">
-            <!-- Updated to display admin ID, IC number, and name below each other -->
+            
             <p id="user-uid" class="text-lg font-semibold text-gray-700"></p>
             <button id="copyuidBtn" class="text-lg font-semibold text-gray-700">Copy Admin ID</button>
             <p id="admin-name" class="text-lg font-semibold text-gray-700"></p>
@@ -124,7 +125,7 @@
     <div id="treportListContainer" class="hidden container">
       <h2 class="title"><i class="fa-regular fa-flag"></i> Report List</h2>
       <div id="infoContainer" class="info-container"></div>
-      <!-- Table for displaying orders -->
+      
       <table class="table">
           <thead>
               <tr>
@@ -145,7 +146,7 @@
   <div id="orderListContainer" class="hidden container">
     <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
     <div id="infoContainer" class="info-container"></div>
-    <!-- Table for displaying orders -->
+    
     <table class="table">
         <thead>
             <tr>
@@ -158,7 +159,7 @@
             </tr>
         </thead>
         <tbody id="orderTableBody">
-            <!-- Order rows will be appended here -->
+            
             <thead>
                 <tr>
                     <th class="col-userfullname"></th>
