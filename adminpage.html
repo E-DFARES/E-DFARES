@@ -38,7 +38,6 @@
             <button id="showFeedback" data-specific-id="afeedback"><i class="fa-regular fa-comment"></i> Chat</button>
             <button id="showContactus" data-specific-id="acontact"><i class="fa-solid fa-phone"></i> Contact Us</button>
             <button id="showUsermanual" data-specific-id="amanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
-            <button id="showUsermanual" data-specific-id="amanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
             <hr>
             <button id="registerUserBtn">Register User</button>
             <button id="registerTechBtn">Register Technician</button>
@@ -104,9 +103,12 @@
 
     <!-- Product List -->
     <div id="productListContainer" class="container mx-auto hidden">
-      <h2 class="title text-3xl font-bold text-gray-900 mb-6"><i class="fa-solid fa-laptop"></i> Products List</h2>
+      <h2 class="title text-3xl font-bold text-gray-900 mb-6"><i class="fa-solid fa-laptop"></i> Products</h2>
       <div id="productInfoContainer" class="info-container bg-white shadow-md rounded-lg p-6">
-          <table class="table">
+            <input type="text" id="productInp" placeholder="Enter product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+            <input type="text" id="serialInp" placeholder="Enter product serial number" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+            <button id="productBtn">Add Product</button>  
+            <table class="table">
               <thead>
                   <tr>
                       <th class="col-product">Product</th>
@@ -117,7 +119,7 @@
               </thead>
               <tbody id="productTableBody">
               </tbody>
-          </table>
+            </table>
       </div>
     </div>
 
@@ -228,8 +230,8 @@
                 <li><b>Register Users and Technicians</b></li>
                 <li>Admin can register new user and technician accounts.</li>
                 <br>
-                <li><b>View Added Products</b></li>
-                <li>Admin can view products added by users.</li>
+                <li><b>Add Product</b></li>
+                <li>Admin can add a product by entering its serial number.</li>
                 <br>
                 <li><b>View Reports</b></li>
                 <li>Admin can view reports made by users.</li>
@@ -271,6 +273,43 @@
     // Retrieve admin UID from localStorage
     const adminUid = localStorage.getItem("admin-uid");
     let userFullName; 
+
+
+    // Function to handle product submission
+    document.getElementById("productBtn").addEventListener("click", () => {
+        const productName = document.getElementById("productInp").value.trim();
+        const productSerial = document.getElementById("serialInp").value.trim();
+
+        if (productName !== "" && productSerial !== "") {
+            // Push product data to the database under admin UID
+            const productsRef = ref(db, `AdminsAuthList/${adminUid}/products`);
+            const newProductRef = push(productsRef);
+            const productData = {
+                name: productName,
+                serial: productSerial,
+                date: new Date().toLocaleDateString(), // Capture the current date
+            };
+            set(newProductRef, productData)
+                .then(() => {
+                    // Clear input fields after submission
+                    document.getElementById("productInp").value = "";
+                    document.getElementById("serialInp").value = "";
+
+                    // Create element to display product
+                    const productRow = document.createElement("tr");
+                    productRow.innerHTML = `
+                        <td>${productData.name}</td>
+                        <td>${productData.serial}</td>
+                        <td>${productData.date}</td>
+                    `;
+                })
+                .catch((error) => {
+                    console.error("Error adding product: ", error);
+                });
+        } else {
+            alert("Please enter both a product name and a serial number.");
+        }
+    });
 
 
     // Fetch and display products under admin UID with delete button

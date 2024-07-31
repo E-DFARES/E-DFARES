@@ -1,88 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technician Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Technician Login</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <!-- Link to the custom styles.css file -->
-  <link href="rlstyles.css" rel="stylesheet">
-</head>
+    <link href="rlstyles.css" rel="stylesheet" />
+  </head>
 
-<header class="headertop bg-blue-900 text-white p-5">
+  <header class="headertop bg-blue-900 text-white p-5">
     <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-3xl font-bold">E-DFARES</h1>
-        <nav>
-            <ul class="flex space-x-4">
-                <li><a href="index.html" class="hover:underline">Home</a></li>            </ul>
-        </nav>
+      <h1 class="text-3xl font-bold">E-DFARES</h1>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="index.html" class="hover:underline">Home</a></li>
+        </ul>
+      </nav>
     </div>
-</header>
-<footer class="footerbtm bg-blue-900 text-white p-5">
+  </header>
+  <footer class="footerbtm bg-blue-900 text-white p-5">
     <p>&copy; 2024 E-DFARES. All rights reserved.</p>
-</footer>
+  </footer>
 
-
-
-<body class="bg-blue-50">
+  <body class="bg-blue-50">
     <div class="parent-container flex justify-center items-center h-4/5 mt-10">
-    <div class="form-container bg-white rounded-lg p-8 max-w-md w-full space-y-6">
-      <h2 class="text-center text-2xl font-bold mb-2"><i class="fa-solid fa-user-gear"></i> Technician Login</h2>
-      <form id="MainForm" class="space-y-4">
-        <div class="form-group">
-          <label for="adminUidInput" class="form-label"><i class="fa-solid fa-user-tie"></i> Admin UID</label>
-          <input type="text" id="adminUidInput" class="form-input" placeholder="Admin UID">
-        </div>
-        <div class="form-group">
-            <label for="emailInp" class="form-label"><i class="fa-regular fa-envelope"></i> Email address</label>
-            <input type="email" id="emailInp" class="form-input" placeholder="name@example.com">
-        </div>
-        <!-- Password input group -->
-        <div class="form-group">
-            <label for="passwordInp" class="form-label"><i class="fa-solid fa-lock"></i> Password</label>
+      <div
+        class="form-container bg-white rounded-lg p-8 max-w-md w-full space-y-6"
+      >
+        <h2 class="text-center text-2xl font-bold mb-2">
+          <i class="fa-solid fa-user-gear"></i> Technician Login
+        </h2>
+        <form id="MainForm" class="space-y-4">
+          <div class="form-group">
+            <label for="adminUidInput" class="form-label"
+              ><i class="fa-solid fa-user-tie"></i> Admin UID</label
+            >
+            <input
+              type="text"
+              id="adminUidInput"
+              class="form-input"
+              placeholder="Admin UID"
+            />
+          </div>
+          <div class="form-group">
+            <label for="emailInp" class="form-label"
+              ><i class="fa-regular fa-envelope"></i> Email address</label
+            >
+            <input
+              type="email"
+              id="emailInp"
+              class="form-input"
+              placeholder="name@example.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="passwordInp" class="form-label"
+              ><i class="fa-solid fa-lock"></i> Password</label
+            >
             <div class="relative">
-            <input type="password" id="passwordInp" class="form-input" placeholder="Password">
-            <button type="button" id="togglePassword" class="inset-y-0 toggle-password">Show</button>
+              <input
+                type="password"
+                id="passwordInp"
+                class="form-input"
+                placeholder="Password"
+              />
+              <button
+                type="button"
+                id="togglePassword"
+                class="inset-y-0 toggle-password"
+              >
+                Show
+              </button>
             </div>
-        </div>
+          </div>
 
-        <label id="forgotpasslabel" class="block text-right underline cursor-pointer transition-colors duration-100">Forgot Password</label>
-        
-        <button type="submit" class="submit-btn">Login</button>
-        <a href="registertech.html" class="block">
-          <button type="button" class="signin-btn mt-3">Don't have an account? Register here</button>
-        </a>
-      </form>
+          <label
+            id="forgotpasslabel"
+            class="block text-right underline cursor-pointer transition-colors duration-100"
+            >Forgot Password</label
+          >
+
+          <button type="submit" class="submit-btn">Login</button>
+        </form>
+      </div>
     </div>
-  </div>
-</body>
-<script>
-    const togglePasswordButton = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('passwordInp');
+  </body>
+  <script>
+    const togglePasswordButton = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("passwordInp");
 
-    togglePasswordButton.addEventListener('click', function () {
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      this.textContent = type === 'password' ? 'Show' : 'Hide';
+    togglePasswordButton.addEventListener("click", function () {
+      const type =
+        passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+      this.textContent = type === "password" ? "Show" : "Hide";
     });
-</script>
-<script type="module">
+  </script>
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-    import { getDatabase, get, ref, child } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
-    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+    import {
+      getDatabase,
+      get,
+      ref,
+      child,
+    } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail,
+    } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
-        apiKey: "AIzaSyCi54RIsuF-w0-baut0GZ1yNyoMg5VsNMw",
-        authDomain: "e-dfares.firebaseapp.com",
-        databaseURL: "https://e-dfares-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "e-dfares",
-        storageBucket: "e-dfares.appspot.com",
-        messagingSenderId: "172364723669",
-        appId: "1:172364723669:web:90b88766d4ef37fffb395c",
-        measurementId: "G-H28TTTD19M"
+      apiKey: "AIzaSyCi54RIsuF-w0-baut0GZ1yNyoMg5VsNMw",
+      authDomain: "e-dfares.firebaseapp.com",
+      databaseURL:
+        "https://e-dfares-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "e-dfares",
+      storageBucket: "e-dfares.appspot.com",
+      messagingSenderId: "172364723669",
+      appId: "1:172364723669:web:90b88766d4ef37fffb395c",
+      measurementId: "G-H28TTTD19M",
     };
 
     const app = initializeApp(firebaseConfig);
@@ -90,67 +140,81 @@
     const auth = getAuth(app);
     const dbref = ref(db);
 
-    let EmailInp = document.getElementById('emailInp');
-    let PassInp = document.getElementById('passwordInp');
-    let MainForm = document.getElementById('MainForm');
-    let ForgotPassLabel = document.getElementById('forgotpasslabel');
+    let EmailInp = document.getElementById("emailInp");
+    let PassInp = document.getElementById("passwordInp");
+    let MainForm = document.getElementById("MainForm");
+    let ForgotPassLabel = document.getElementById("forgotpasslabel");
 
-    let SignInTech = evt => {
-        evt.preventDefault();
+    let SignInTech = (evt) => {
+      evt.preventDefault();
 
-        const adminUid = document.getElementById('adminUidInput').value; // Get admin UID from input field
-        const adminDbRef = ref(db, 'AdminsAuthList/' + adminUid + '/TechAuthList'); // Reference to admin's TechAuthList
+      const adminUid = document.getElementById("adminUidInput").value; // Get admin UID from input field
+      const adminDbRef = ref(
+        db,
+        "AdminsAuthList/" + adminUid + "/TechAuthList"
+      ); // Reference to admin's TechAuthList
 
-        signInWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
-            .then((credentials) => {
-                console.log('Technician signed in:', credentials.user.uid); // Debugging: Log technician ID
-                localStorage.setItem("tech-admin-uid", adminUid); // Save admin UID in localStorage
+      signInWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+        .then((credentials) => {
+          console.log("Technician signed in:", credentials.user.uid); // Debugging: Log technician ID
+          localStorage.setItem("tech-admin-uid", adminUid); // Save admin UID in localStorage
 
-                get(child(adminDbRef, credentials.user.uid)).then((snapshot) => { // Retrieve technician data using admin's database reference
-                    if (snapshot.exists()) {
-                        const techData = snapshot.val();
-                        console.log('Technician data found:', techData); // Debugging: Log technician data
-                        localStorage.setItem("tech-info", JSON.stringify({
-                            techicnumber: techData.techicnumber,
-                            techfullname: techData.techfullname
-                        }));
-                        localStorage.setItem("tech-creds", JSON.stringify(credentials.user));
+          get(child(adminDbRef, credentials.user.uid))
+            .then((snapshot) => {
+              // Retrieve technician data using admin's database reference
+              if (snapshot.exists()) {
+                const techData = snapshot.val();
+                console.log("Technician data found:", techData); // Debugging: Log technician data
+                localStorage.setItem(
+                  "tech-info",
+                  JSON.stringify({
+                    techicnumber: techData.techicnumber,
+                    techfullname: techData.techfullname,
+                  })
+                );
+                localStorage.setItem(
+                  "tech-creds",
+                  JSON.stringify(credentials.user)
+                );
 
-                        window.location.href = 'techpage.html';
-                    } else {
-                        alert('Technician data does not exist in database.');
-                        console.error('No data available for technician:', credentials.user.uid); // Debugging: Log missing data
-                    }
-                }).catch((error) => {
-                    alert('Error fetching technician data.');
-                    console.error('Database read error:', error); // Debugging: Log database error
-                });
+                window.location.href = "techpage.html";
+              } else {
+                alert("Technician data does not exist in database.");
+                console.error(
+                  "No data available for technician:",
+                  credentials.user.uid
+                ); // Debugging: Log missing data
+              }
             })
             .catch((error) => {
-                alert(error.message);
-                console.error('Authentication error:', error.code, error.message); // Debugging: Log authentication error
+              alert("Error fetching technician data.");
+              console.error("Database read error:", error); // Debugging: Log database error
             });
-    }
+        })
+        .catch((error) => {
+          alert(error.message);
+          console.error("Authentication error:", error.code, error.message); // Debugging: Log authentication error
+        });
+    };
 
-    MainForm.addEventListener('submit', SignInTech);
-    ForgotPassLabel.addEventListener('click', ForgotPassword);
+    MainForm.addEventListener("submit", SignInTech);
+    ForgotPassLabel.addEventListener("click", ForgotPassword);
 
     function ForgotPassword() {
-        const email = EmailInp.value;
-        if (!email) {
-            alert('Please enter your email address to reset your password.');
-            return;
-        }
+      const email = EmailInp.value;
+      if (!email) {
+        alert("Please enter your email address to reset your password.");
+        return;
+      }
 
-        sendPasswordResetEmail(auth, email)
-            .then(() => {
-                alert('Password reset email sent.');
-            })
-            .catch((error) => {
-                alert('Error sending password reset email: ' + error.message);
-                console.error('Password reset error:', error);
-            });
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          alert("Password reset email sent.");
+        })
+        .catch((error) => {
+          alert("Error sending password reset email: " + error.message);
+          console.error("Password reset error:", error);
+        });
     }
-</script>
-
+  </script>
 </html>

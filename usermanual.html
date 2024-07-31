@@ -1,144 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manual</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
 
-    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .manualcontainer {
+        max-width: 1100px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #00007b;
+      }
+      h2 {
+        border-bottom: 2px solid #00007b;
+        padding-bottom: 5px;
+        font-size: 30px;
+        text-align: center;
+        margin-top: 30px;
+      }
+      h3 {
+        margin-top: 20px;
+        color: #00007b;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      ul li {
+        background: #e9ecef;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .step {
+        margin-top: 10px;
+      }
+      .step p {
+        margin: 10px 0;
+      }
+      @media (max-width: 768px) {
+        .container {
+          margin: 20px;
+          padding: 15px;
         }
-        .manualcontainer {
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #00007B;
-        }
-        h2 {
-            border-bottom: 2px solid #00007B;
-            padding-bottom: 5px;
-            font-size: 30px;
-            text-align: center;
-            margin-top: 30px;
-        }
-        h3 {
-            margin-top: 20px;
-            color: #00007B;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            background: #e9ecef;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .step {
-            margin-top: 10px;
-        }
-        .step p {
-            margin: 10px 0;
-        }
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px;
-                padding: 15px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="manualcontainer">
-        <h1>Manual E-DFARES</h1>
-        <br>
-        <h2>Step for Admin</h2>
-        <div class="step">
-            <h3>1. Register Admin Account</h3>
-            <ul>
-                <li>Fill in the following details:</li>
-                <ul>
-                    <li>IC Number</li>
-                    <li>Name</li>
-                    <li>Phone Number</li>
-                    <li>Address</li>
-                    <li>Email</li>
-                    <li>Password</li>
-                </ul>
-            </ul>
-        </div>
-        <div class="step">
-            <h3>2. Login to Your Account</h3>
-            <ul>
-                <li>Use your email and password to log in.</li>
-            </ul>
-        </div>
-        <div class="step">
-            <h3>Inside Admin Page</h3>
-            <ul>
-                <li><b>Register Users and Technicians</b></li>
-                <li>Admin can register new user and technician accounts.</li>
-                <li><b>View Added Products</b></li>
-                <li>Admin can view products added by users.</li>
-                <li><b>View Reports</b></li>
-                <li>Admin can view reports made by users.</li>
-                <li><b>Approve Orders</b></li>
-                <li>Admin needs to approve orders, which will then be sent to technicians for processing.</li>
-            </ul>
-        </div>
-        <br>
-        <h2>Step for User</h2>
-        <div class="step">
-            <h3>1. Get Login Information from Admin</h3>
-            <ul>
-                <li>Login using the provided admin ID, email, and password.</li>
-            </ul>
-        </div>
-        <div class="step">
-            <h3>Inside User Page</h3>
-            <ul>
-                <li><b>Add Product</b></li>
-                <li>User can add a product by entering its serial number.</li>
-                <li><b>Make Report</b></li>
-                <li>User can create a report about a product by typing the problem in the report form.</li>
-                <li><b>Make Order</b></li>
-                <li>User can place an order for a product. The order will be sent to the admin for approval or rejection.</li>
-                <li><b>Contact Admin</b></li>
-                <li>User can click the "Contact Admin" button to view the admin's contact info, including name, phone number, and address.</li>
-            </ul>
-        </div>
-        <br>
-        <h2>Step for Technician</h2>
-        <div class="step">
-            <h3>1. Get Login Information from Admin</h3>
-            <ul>
-                <li>Login using the provided admin ID, email, and password.</li>
-            </ul>
-        </div>
-        <div class="step">
-            <h3>Inside Technician Page</h3>
-            <ul>
-                <li><b>View Reports</b></li>
-                <li>Technician can see reports made by users.</li>
-                <li><b>Send Feedback</b></li>
-                <li>Technician can send feedback about the reports.</li>
-                <li><b>View Approved Orders</b></li>
-                <li>Technician can view orders approved by the admin from users.</li>
-            </ul>
-        </div>
+      <h1>Manual E-DFARES</h1>
+      <br />
+      <h2>Step for Admin</h2>
+      <div class="step">
+        <h3>1. Register Admin Account</h3>
+        <ul>
+          <li>Fill in the following details:</li>
+          <ul>
+            <li>IC Number</li>
+            <li>Name</li>
+            <li>Phone Number</li>
+            <li>Address</li>
+            <li>Email</li>
+            <li>Password</li>
+          </ul>
+        </ul>
+      </div>
+      <div class="step">
+        <h3>2. Login to Your Account</h3>
+        <ul>
+          <li>Use your email and password to log in.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h3>Inside Admin Page</h3>
+        <ul>
+          <li><b>Register Users and Technicians</b></li>
+          <li>Admin can register new user and technician accounts.</li>
+          <li><b>Add Product</b></li>
+          <li>Admin can add a product by entering its serial number.</li>
+          <li><b>View Reports</b></li>
+          <li>Admin can view reports made by users.</li>
+          <li><b>Approve Orders</b></li>
+          <li>
+            Admin needs to approve orders, which will then be sent to
+            technicians for processing.
+          </li>
+        </ul>
+      </div>
+      <br />
+      <h2>Step for User</h2>
+      <div class="step">
+        <h3>1. Get Login Information from Admin</h3>
+        <ul>
+          <li>Login using the provided admin ID, email, and password.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h3>Inside User Page</h3>
+        <ul>
+          <li><b>View Added Products</b></li>
+          <li>User can view products added by admins.</li>
+          <li><b>Make Report</b></li>
+          <li>
+            User can create a report about a product by typing the problem in
+            the report form.
+          </li>
+          <li><b>Make Order</b></li>
+          <li>
+            User can place an order for a product. The order will be sent to the
+            admin for approval or rejection.
+          </li>
+          <li><b>Contact Admin</b></li>
+          <li>
+            User can click the "Contact Admin" button to view the admin's
+            contact info, including name, phone number, and address.
+          </li>
+        </ul>
+      </div>
+      <br />
+      <h2>Step for Technician</h2>
+      <div class="step">
+        <h3>1. Get Login Information from Admin</h3>
+        <ul>
+          <li>Login using the provided admin ID, email, and password.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h3>Inside Technician Page</h3>
+        <ul>
+          <li><b>View Reports</b></li>
+          <li>Technician can see reports made by users.</li>
+          <li><b>Send Feedback</b></li>
+          <li>Technician can send feedback about the reports.</li>
+          <li><b>View Approved Orders</b></li>
+          <li>Technician can view orders approved by the admin from users.</li>
+        </ul>
+      </div>
     </div>
-</body>
+  </body>
 </html>

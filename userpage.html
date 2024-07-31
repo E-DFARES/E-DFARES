@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Link to Tailwind CSS CDN -->
+    
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Link to external CSS -->
+    
     <link rel="stylesheet" href="pagestyles.css">
 </head>
 
@@ -45,7 +45,7 @@
 </footer>
 
     <div class="flex h-screen">
-        <!-- Sidebar -->
+        
         <div class="sidebar">
             <button id="showProfile" data-specific-id="uprofile"><i class="fa-regular fa-user"></i> Profile</button>
             <button id="showProductList" data-specific-id="uproduct"><i class="fa-solid fa-laptop"></i> Product</button>
@@ -92,11 +92,11 @@
             });
         </script>
 
-        <!-- Main content -->
+        
         <div class="flex-1 p-6">
             <h2 class="technician text-2xl font-bold mb-4"><span id=""></span></h2>
 
-    <!-- Profile -->
+    
     <div id="profileListContainer" class="hidden container">
         <h2 class="title"><i class="fa-regular fa-user"></i> Profile</h2>
         <div id="infoContainer" class="info-container">
@@ -107,14 +107,10 @@
         </div>
     </div>
 
-    <!-- Product List -->
+    
     <div id="productListContainer" class="container mx-auto hidden">
-        <h2 class="title text-3xl font-bold text-gray-900 mb-6"><i class="fa-solid fa-laptop"></i> Add Products</h2>
+        <h2 class="title text-3xl font-bold text-gray-900 mb-6"><i class="fa-solid fa-laptop"></i> Products</h2>
         <div id="productInfoContainer" class="info-container bg-white shadow-md rounded-lg p-6">
-            <!-- Input field and button -->
-            <input type="text" id="productInp" placeholder="Enter product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
-            <input type="text" id="serialInp" placeholder="Enter product serial number" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
-            <button id="productBtn">Add Product</button>
             <table class="table">
                 <thead>
                     <tr>
@@ -129,15 +125,15 @@
         </div>
     </div>
 
-    <!-- Report List -->
+    
     <div id="treportListContainer" class="hidden container">
         <h2 class="title"><i class="fa-regular fa-flag"></i> Send Report</h2>
         <div id="sendreportContainer" class="info-container bg-white shadow-md rounded-lg p-6">
-            <!-- Dropdown to select product -->
+            
             <div class="relative mb-4">
                 <button id="dropdownButton" class="w-full bg-white border border-gray-300 px-4 py-2 rounded-md focus:outline-none">Select Product</button>
                 <div id="dropdownMenu" class="absolute w-full bg-white border border-gray-300 rounded-md hidden max-h-60 overflow-y-auto">
-                    <!-- Product items will be appended here -->
+                    
                 </div>
             </div>
             <input type="text" id="selectproductInp" placeholder="Product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" readonly>
@@ -156,19 +152,19 @@
                     </tr>
                 </thead>
                 <tbody id="reportTableBody">
-                <!-- Order rows will be appended here -->
+                
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Order List -->
+    
     <div id="orderListContainer" class="hidden container">
         <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
         <div id="infoContainer" class="info-container"></div>
         <input type="text" id="orderInp" placeholder="Product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
         <button id="orderBtn">Order</button> 
-            <!-- Table for displaying orders -->
+            
             <table class="table">
             <thead>
                 <tr>
@@ -179,7 +175,7 @@
                 </tr>
             </thead>
             <tbody id="orderTableBody">
-                <!-- Order rows will be appended here -->
+                
                 <thead>
                     <tr>
                         <th class="col-userfullname"></th>
@@ -195,7 +191,7 @@
     
 
 
-    <!-- Feedback -->
+    
     <div id="feedbackContainer" class="hidden container">
         <h2 class="title"><i class="fa-regular fa-comment"></i> Chat</h2>
         <div id="infoContainer" class="info-container"></div>
@@ -206,7 +202,7 @@
         </div>
     </div>
 
-<!-- Contact Admin -->
+
 <div id="contactusContainer" class="hidden container">
     <h2 class="title"><i class="fa-solid fa-phone"></i> Contact Admin</h2>
     <div id="infoContainer" class="info-container">
@@ -215,14 +211,14 @@
         <p id="adminAddress" class="text-lg font-semibold text-gray-700"></p>
     </div>
 </div>
-<!-- User Manual -->
+
 <div id="usermanualContainer" class="hidden container">
     <div id="infoContainer" class="info-container">
         <div class="step">
             <h2 class="title"><i class="fa-regular fa-file-lines"></i> User Manual</h2>
             <ul>
-                <li><b>Add Product</b></li>
-                <li>User can add a product by entering its serial number.</li>
+                <li><b>View Added Products</b></li>
+                <li>User can view products added by admins.</li>
                 <br>
                 <li><b>Make Report</b></li>
                 <li>User can create a report about a product by typing the problem in the report form.</li>
@@ -347,42 +343,7 @@
 // Flag to ensure the real-time listener is set up only once
 let isListenerSet = false;
 
-// Function to handle product submission
-document.getElementById("productBtn").addEventListener("click", () => {
-    const productName = document.getElementById("productInp").value.trim();
-    const productSerial = document.getElementById("serialInp").value.trim();
 
-    if (productName !== "" && productSerial !== "") {
-        // Push product data to the database under admin UID
-        const productsRef = ref(db, `AdminsAuthList/${adminUid}/products`);
-        const newProductRef = push(productsRef);
-        const productData = {
-            name: productName,
-            serial: productSerial,
-            date: new Date().toLocaleDateString(), // Capture the current date
-            userFullName: userFullName
-        };
-        set(newProductRef, productData)
-            .then(() => {
-                // Clear input fields after submission
-                document.getElementById("productInp").value = "";
-                document.getElementById("serialInp").value = "";
-
-                // Create element to display product
-                const productRow = document.createElement("tr");
-                productRow.innerHTML = `
-                    <td>${productData.name}</td>
-                    <td>${productData.serial}</td>
-                    <td>${productData.date}</td>
-                `;
-            })
-            .catch((error) => {
-                console.error("Error adding product: ", error);
-            });
-    } else {
-        alert("Please enter both a product name and a serial number.");
-    }
-});
 
 // Function to fetch and display products under admin UID with serial numbers
 function fetchAndDisplayProducts() {
