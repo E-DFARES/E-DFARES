@@ -31,7 +31,7 @@
 <body class="bg-gray-100">
     <header class="headertop bg-blue-900 text-white p-5">
     <div class="containerhh mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold">E-DFARES <i class="fa-solid fa-user"></i> User - <span id="userFullname"></span></h1>
+        <h1 class="text-2xl font-bold">E-COMRES <i class="fa-solid fa-user"></i> User - <span id="userFullname"></span></h1>
 
         <nav>
             <ul class="flex space-x-4">
@@ -41,7 +41,7 @@
     </div>
 </header>
 <footer class="footerbtm bg-blue-900 text-white p-6">
-    <p>&copy; 2024 E-DFARES. All rights reserved.</p>
+    <p>&copy; 2024 E-COMRES. All rights reserved.</p>
 </footer>
 
     <div class="flex h-screen">
@@ -574,57 +574,68 @@ fetchAndDisplayProducts();
 
                 // Listen for real-time updates
                 onValue(reportsRef, (snapshot) => {
-                    const reportTableBody = document.getElementById("reportTableBody");
-                    reportTableBody.innerHTML = ""; // Clear the table body first
+    const reportTableBody = document.getElementById("reportTableBody");
+    reportTableBody.innerHTML = ""; // Clear the table body first
 
-                    if (snapshot.exists()) {
-                        snapshot.forEach((childSnapshot) => {
-                            const reportData = childSnapshot.val();
-                            const reportId = childSnapshot.key;
-                            const row = document.createElement("tr");
+    if (snapshot.exists()) {
+        const reportsArray = [];
 
-                            const userFullNameCell = document.createElement("td");
-                            userFullNameCell.textContent = reportData.userFullName || "N/A";
-                            row.appendChild(userFullNameCell);
+        // Push each child snapshot into the array
+        snapshot.forEach((childSnapshot) => {
+            reportsArray.push(childSnapshot);
+        });
 
-                            const productCell = document.createElement("td");
-                            productCell.textContent = reportData.product || "N/A";
-                            row.appendChild(productCell);
+        // Reverse the array to get the opposite order
+        reportsArray.reverse();
 
-                            const serialNumberCell = document.createElement("td");
-                            serialNumberCell.textContent = reportData.serial || "N/A";
-                            row.appendChild(serialNumberCell);
+        // Loop through the reversed array and create rows
+        reportsArray.forEach((childSnapshot) => {
+            const reportData = childSnapshot.val();
+            const reportId = childSnapshot.key;
+            const row = document.createElement("tr");
 
-                            const reportCell = document.createElement("td");
-                            reportCell.textContent = reportData.report || "N/A";
-                            row.appendChild(reportCell);
+            const userFullNameCell = document.createElement("td");
+            userFullNameCell.textContent = reportData.userFullName || "N/A";
+            row.appendChild(userFullNameCell);
 
-                            const dateCell = document.createElement("td");
-                            dateCell.textContent = reportData.date || "N/A";
-                            row.appendChild(dateCell);
+            const productCell = document.createElement("td");
+            productCell.textContent = reportData.product || "N/A";
+            row.appendChild(productCell);
 
-                            const deleteCell = document.createElement("td");
-                            deleteCell.style.textAlign = "center";
+            const serialNumberCell = document.createElement("td");
+            serialNumberCell.textContent = reportData.serial || "N/A";
+            row.appendChild(serialNumberCell);
 
-                            const deleteButton = document.createElement("button");
-                            deleteButton.className = "delete-btn";
-                            deleteButton.addEventListener("click", () => deleteReport(reportId));
+            const reportCell = document.createElement("td");
+            reportCell.textContent = reportData.report || "N/A";
+            row.appendChild(reportCell);
 
-                            const trashIcon = document.createElement("i");
-                            trashIcon.className = "fa-solid fa-trash-can";
+            const dateCell = document.createElement("td");
+            dateCell.textContent = reportData.date || "N/A";
+            row.appendChild(dateCell);
 
-                            deleteButton.appendChild(trashIcon);
-                            deleteCell.appendChild(deleteButton);
-                            row.appendChild(deleteCell);
+            const deleteCell = document.createElement("td");
+            deleteCell.style.textAlign = "center";
 
-                            reportTableBody.appendChild(row);
-                        });
-                    } else {
-                        console.log("No data available");
-                    }
-                }, (error) => {
-                    console.error("Error fetching reports:", error);
-                });
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "delete-btn";
+            deleteButton.addEventListener("click", () => deleteReport(reportId));
+
+            const trashIcon = document.createElement("i");
+            trashIcon.className = "fa-solid fa-trash-can";
+
+            deleteButton.appendChild(trashIcon);
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+
+            reportTableBody.appendChild(row);
+        });
+    } else {
+        console.log("No data available");
+    }
+}, (error) => {
+    console.error("Error fetching reports:", error);
+});
             }
 
             // Function to delete a report

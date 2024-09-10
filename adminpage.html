@@ -15,7 +15,7 @@
 <body class="bg-gray-100">
     <header class="headertop bg-blue-900 text-white p-5">
     <div class="containerhh mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold">E-DFARES <i class="fa-solid fa-user-tie"></i> Admin - <span id="admin-name2"></span></h1>
+        <h1 class="text-2xl font-bold">E-COMRES <i class="fa-solid fa-user-tie"></i> Admin - <span id="admin-name2"></span></h1>
 
         <nav>
             <ul class="flex space-x-4">
@@ -25,7 +25,7 @@
     </div>
 </header>
 <footer class="footerbtm bg-blue-900 text-white p-6">
-    <p>&copy; 2024 E-DFARES. All rights reserved.</p>
+    <p>&copy; 2024 E-COMRES. All rights reserved.</p>
 </footer>
 
     <div class="flex h-screen">
@@ -391,39 +391,47 @@
         reportTableBody.innerHTML = ''; // Clear the table before adding updated data
 
         if (snapshot.exists()) {
-        const reportsData = snapshot.val();
-        for (const reportId in reportsData) {
-            const report = reportsData[reportId];
-            const row = document.createElement("tr");
+            const reportsData = snapshot.val();
+            const reportsArray = Object.keys(reportsData).map(reportId => ({
+                id: reportId,
+                ...reportsData[reportId]
+            }));
 
-            const userFullNameCell = document.createElement("td");
-            userFullNameCell.textContent = report.userFullName || "-";
-            row.appendChild(userFullNameCell);
+            // Reverse the array to get the opposite order
+            reportsArray.reverse();
 
-            const productCell = document.createElement("td");
-            productCell.textContent = report.product || "-";
-            row.appendChild(productCell);
+            // Create table rows for each report in the reversed array
+            reportsArray.forEach(report => {
+                const row = document.createElement("tr");
 
-            const serialNumberCell = document.createElement("td");
-            serialNumberCell.textContent = report.serial || "-";
-            row.appendChild(serialNumberCell);
+                const userFullNameCell = document.createElement("td");
+                userFullNameCell.textContent = report.userFullName || "-";
+                row.appendChild(userFullNameCell);
 
-            const reportCell = document.createElement("td");
-            reportCell.textContent = report.report || "-";
-            row.appendChild(reportCell);
+                const productCell = document.createElement("td");
+                productCell.textContent = report.product || "-";
+                row.appendChild(productCell);
 
-            const dateCell = document.createElement("td");
-            dateCell.textContent = report.date || "-";
-            row.appendChild(dateCell);
+                const serialNumberCell = document.createElement("td");
+                serialNumberCell.textContent = report.serial || "-";
+                row.appendChild(serialNumberCell);
 
-            const editedTextCell = document.createElement("td");
-            editedTextCell.textContent = report.editedText || "-";
-            row.appendChild(editedTextCell);
+                const reportCell = document.createElement("td");
+                reportCell.textContent = report.report || "-";
+                row.appendChild(reportCell);
 
-            reportTableBody.appendChild(row);
-        }
+                const dateCell = document.createElement("td");
+                dateCell.textContent = report.date || "-";
+                row.appendChild(dateCell);
+
+                const editedTextCell = document.createElement("td");
+                editedTextCell.textContent = report.editedText || "-";
+                row.appendChild(editedTextCell);
+
+                reportTableBody.appendChild(row);
+            });
         } else {
-        console.log("No data available");
+            console.log("No data available");
         }
     }, (error) => {
         console.error("Error fetching reports:", error);
