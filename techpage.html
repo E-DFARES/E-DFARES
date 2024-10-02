@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="pagestyles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
 </head>
 
 <script>
@@ -110,24 +113,49 @@
         <h2 class="title"><i class="fa-regular fa-flag"></i> Report List</h2>
         <div id="infoContainer" class="info-container"></div>
         
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="col-tuserfullname">User Name</th>
-                    <th class="col-tproduct">Product</th>
-                    <th class="col-tserialnumber">Serial Number</th>
-                    <th class="col-treport">Report</th>
-                    <th class="col-tdate">Date</th>
-                    <th class="col-treport">Send Feedback</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="reportTableBody">
-            </tbody>
-        </table>
+        <div id="reporttablecontainer">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-tuserfullname">User Name</th>
+                        <th class="col-tproduct">Product</th>
+                        <th class="col-tserialnumber">Serial Number</th>
+                        <th class="col-treport">Report</th>
+                        <th class="col-tdate">Date</th>
+                        <th class="col-treport">Send Feedback</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <button id="OpenPdfBtn" class="pdfBtn">Open In Pdf</button>
     </div>
 
-
+    <script>
+        document.getElementById("OpenPdfBtn").addEventListener("click", function () {
+            // Get all buttons and hide them
+            var buttons = document.querySelectorAll('button');
+            buttons.forEach(button => button.style.display = 'none');
+            
+            // Get the content of the container
+            var element = document.getElementById("reporttablecontainer");
+        
+            // Use html2pdf to convert the content to PDF
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: 'report.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save().then(function() {
+                // Show all buttons again after the PDF is generated
+                buttons.forEach(button => button.style.display = 'inline-block');
+            });
+        });
+    </script>
 
 
 
@@ -135,20 +163,46 @@
     <div id="orderListContainer" class="hidden container">
         <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
         <div id="infoContainer" class="info-container"></div>
-        
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="col-userfullname">User Full Name</th>
-                    <th class="col-product">Product</th>
-                    <th class="col-approval">Approval</th>
-                </tr>
-            </thead>
-            <tbody id="orderTableBody">
-                
-            </tbody>
-        </table>
+        <div id="ordertablecontainer">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-userfullname">User Full Name</th>
+                        <th class="col-product">Product</th>
+                        <th class="col-approval">Approval</th>
+                    </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                    
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <button id="OpenPdfBtn2" class="pdfBtn">Open In Pdf</button>
     </div>
+
+    <script>
+        document.getElementById("OpenPdfBtn2").addEventListener("click", function () {
+            // Get all buttons and hide them
+            var buttons = document.querySelectorAll('button');
+            buttons.forEach(button => button.style.display = 'none');
+            
+            // Get the content of the container
+            var element = document.getElementById("ordertablecontainer");
+        
+            // Use html2pdf to convert the content to PDF
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: 'Order.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save().then(function() {
+                // Show all buttons again after the PDF is generated
+                buttons.forEach(button => button.style.display = 'inline-block');
+            });
+        });
+    </script>
 
     <!-- Feedback -->
     <div id="feedbackContainer" class="hidden container">
@@ -260,125 +314,124 @@
 
 
         function fetchReports() {
-    const adminUid = localStorage.getItem("tech-admin-uid");
-    if (!adminUid) {
-        console.log("Admin UID not found");
-        return;
-    }
+            const adminUid = localStorage.getItem("tech-admin-uid");
+            if (!adminUid) {
+                console.log("Admin UID not found");
+                return;
+            }
 
-    const reportsRef = ref(db, `AdminsAuthList/${adminUid}/reports`);
+            const reportsRef = ref(db, `AdminsAuthList/${adminUid}/reports`);
 
-    // Listen for real-time updates
-    onValue(reportsRef, (snapshot) => {
-        const reportTableBody = document.getElementById("reportTableBody");
-        reportTableBody.innerHTML = ""; // Clear the table before adding updated data
+            // Listen for real-time updates
+            onValue(reportsRef, (snapshot) => {
+                const reportTableBody = document.getElementById("reportTableBody");
+                reportTableBody.innerHTML = ""; // Clear the table before adding updated data
 
-        if (snapshot.exists()) {
-            const reportsArray = [];
+                if (snapshot.exists()) {
+                    const reportsArray = [];
 
-            // Collect snapshots into an array
-            snapshot.forEach((childSnapshot) => {
-                reportsArray.push({
-                    id: childSnapshot.key,
-                    data: childSnapshot.val()
-                });
+                    // Collect snapshots into an array
+                    snapshot.forEach((childSnapshot) => {
+                        reportsArray.push({
+                            id: childSnapshot.key,
+                            data: childSnapshot.val()
+                        });
+                    });
+
+                    // Reverse the array to get the opposite order
+                    reportsArray.reverse();
+
+                    // Create table rows for each report in the reversed array
+                    reportsArray.forEach(({ id, data }) => {
+                        const row = document.createElement("tr");
+
+                        const userFullNameCell = document.createElement("td");
+                        userFullNameCell.textContent = data.userFullName || "N/A";
+                        row.appendChild(userFullNameCell);
+
+                        const productCell = document.createElement("td");
+                        productCell.textContent = data.product || "N/A";
+                        row.appendChild(productCell);
+
+                        const serialNumberCell = document.createElement("td");
+                        serialNumberCell.textContent = data.serial || "N/A";
+                        row.appendChild(serialNumberCell);
+
+                        const reportCell = document.createElement("td");
+                        reportCell.textContent = data.report || "N/A";
+                        row.appendChild(reportCell);
+
+                        const dateCell = document.createElement("td");
+                        dateCell.textContent = data.date || "N/A";
+                        row.appendChild(dateCell);
+
+                        const editableCell = document.createElement("td");
+                        editableCell.contentEditable = "true";
+                        editableCell.textContent = data.editedText || "";
+                        row.appendChild(editableCell);
+
+                        const sendButtonCell = document.createElement("td");
+
+                        const sendButton = document.createElement("button");
+                        sendButton.textContent = "Send";
+                        sendButton.id = `sendButton_${id}`; 
+
+                        sendButton.style.backgroundColor = "#007bff";
+                        sendButton.style.color = "#fff";
+                        sendButton.style.border = "none";
+                        sendButton.style.borderRadius = "4px";
+                        sendButton.style.cursor = "pointer";
+                        sendButton.style.fontSize = "14px";
+                        sendButton.style.fontWeight = "bold";
+                        sendButton.style.outline = "none";
+                        sendButton.style.textAlign = "center";
+                        sendButton.style.textTransform = "uppercase";
+                        sendButton.style.transition = "background-color 0.3s";
+                        sendButton.style.padding = "5px 10px"; // Added padding
+
+                        sendButton.addEventListener("mouseover", () => {
+                            sendButton.style.backgroundColor = "#0056b3";
+                        });
+                        sendButton.addEventListener("mouseout", () => {
+                            sendButton.style.backgroundColor = "#007bff";
+                        });
+
+                        sendButton.onclick = () => storeEditedText(adminUid, id, editableCell.textContent);
+
+                        sendButtonCell.appendChild(sendButton);
+                        row.appendChild(sendButtonCell);
+
+
+                        reportTableBody.appendChild(row);
+                    });
+                } else {
+                    console.log("No data available");
+                }
+            }, (error) => {
+                console.error("Error fetching reports:", error);
             });
 
-            // Reverse the array to get the opposite order
-            reportsArray.reverse();
-
-            // Create table rows for each report in the reversed array
-            reportsArray.forEach(({ id, data }) => {
-                const row = document.createElement("tr");
-
-                const userFullNameCell = document.createElement("td");
-                userFullNameCell.textContent = data.userFullName || "N/A";
-                row.appendChild(userFullNameCell);
-
-                const productCell = document.createElement("td");
-                productCell.textContent = data.product || "N/A";
-                row.appendChild(productCell);
-
-                const serialNumberCell = document.createElement("td");
-                serialNumberCell.textContent = data.serial || "N/A";
-                row.appendChild(serialNumberCell);
-
-                const reportCell = document.createElement("td");
-                reportCell.textContent = data.report || "N/A";
-                row.appendChild(reportCell);
-
-                const dateCell = document.createElement("td");
-                dateCell.textContent = data.date || "N/A";
-                row.appendChild(dateCell);
-
-                // Create new editable cell
-                const editableCell = document.createElement("td");
-                editableCell.contentEditable = "true";
-                editableCell.textContent = data.editedText || "";
-                row.appendChild(editableCell);
-
-                const sendButtonCell = document.createElement("td");
-
-                const sendButton = document.createElement("button");
-                sendButton.textContent = "Send";
-                sendButton.id = `sendButton_${id}`; 
-
-                sendButton.style.backgroundColor = "#007bff";
-                sendButton.style.color = "#fff";
-                sendButton.style.border = "none";
-                sendButton.style.borderRadius = "4px";
-                sendButton.style.cursor = "pointer";
-                sendButton.style.fontSize = "14px";
-                sendButton.style.fontWeight = "bold";
-                sendButton.style.outline = "none";
-                sendButton.style.textAlign = "center";
-                sendButton.style.textTransform = "uppercase";
-                sendButton.style.transition = "background-color 0.3s";
-                sendButton.style.padding = "5px 10px"; // Added padding
-
-                sendButton.addEventListener("mouseover", () => {
-                    sendButton.style.backgroundColor = "#0056b3";
-                });
-                sendButton.addEventListener("mouseout", () => {
-                    sendButton.style.backgroundColor = "#007bff";
-                });
-
-                sendButton.onclick = () => storeEditedText(adminUid, id, editableCell.textContent);
-
-                sendButtonCell.appendChild(sendButton);
-                row.appendChild(sendButtonCell);
-
-
-                reportTableBody.appendChild(row);
-            });
-        } else {
-            console.log("No data available");
         }
-    }, (error) => {
-        console.error("Error fetching reports:", error);
-    });
 
-}
+        // Function to store edited text back into the database
+        function storeEditedText(adminUid, reportId, editedText) {
+            const reportRef = ref(db, `AdminsAuthList/${adminUid}/reports/${reportId}`);
+            update(reportRef, { editedText })
+                .then(() => {
+                    console.log("Text saved successfully!");
+                    alert("Feedback send successfully!");
+                })
+                .catch((error) => {
+                    console.error("Error saving text:", error);
+                    alert("Error");
+                });
+        }
 
-// Function to store edited text back into the database
-function storeEditedText(adminUid, reportId, editedText) {
-    const reportRef = ref(db, `AdminsAuthList/${adminUid}/reports/${reportId}`);
-    update(reportRef, { editedText })
-        .then(() => {
-            console.log("Text saved successfully!");
-            alert("Feedback send successfully!");
-        })
-        .catch((error) => {
-            console.error("Error saving text:", error);
-            alert("Error");
-        });
-}
-
-// Call fetchReports to initialize the real-time data fetching
-fetchReports();
+        // Call fetchReports to initialize the real-time data fetching
+        fetchReports();
 
 
-function getAdminInfo(adminUid) {
+        function getAdminInfo(adminUid) {
                 const adminRef = ref(db, `AdminsAuthList/${adminUid}`);
 
                 // Fetch admin IC number

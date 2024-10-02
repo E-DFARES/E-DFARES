@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="pagestyles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -98,7 +100,35 @@
             <p id="admin-address" class="text-lg font-semibold text-gray-700"></p>
             <p id="admin-email" class="text-lg font-semibold text-gray-700"></p>
         </div>
+        <br>
+        <button id="OpenPdfBtn" class="pdfBtn">Open In Pdf</button>
     </div>
+
+    <script>
+        document.getElementById("OpenPdfBtn").addEventListener("click", function () {
+            // Get all buttons and hide them
+            var buttons = document.querySelectorAll('button');
+            buttons.forEach(button => button.style.display = 'none');
+            
+            // Get the content of the container
+            var element = document.getElementById("infoContainer");
+        
+            // Use html2pdf to convert the content to PDF
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: 'Profile.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save().then(function() {
+                // Show all buttons again after the PDF is generated
+                buttons.forEach(button => button.style.display = 'inline-block');
+            });
+        });
+    </script>
+
+
+        
 
 
     <!-- Product List -->
@@ -108,75 +138,154 @@
             <input type="text" id="productInp" placeholder="Enter product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
             <input type="text" id="serialInp" placeholder="Enter product serial number" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
             <button id="productBtn">Add Product</button>  
-            <table class="table">
-              <thead>
-                  <tr>
-                      <th class="col-product">Product</th>
-                      <th class="col-serial">Serial Number</th>
-                      <th class="col-date">Date</th>
-                      <th class="col-delete"></th>
-                  </tr>
-              </thead>
-              <tbody id="productTableBody">
-              </tbody>
-            </table>
+            <div id="tablecontainer">
+                <table class="table">
+                  <thead>
+                      <tr>
+                          <th class="col-product">Product</th>
+                          <th class="col-serial">Serial Number</th>
+                          <th class="col-date">Date</th>
+                          <th class="col-delete"></th>
+                      </tr>
+                  </thead>
+                  <tbody id="productTableBody">
+                  </tbody>
+                </table>
+            </div>
+            <button id="OpenPdfBtn2" class="pdfBtn">Open In Pdf</button>
       </div>
     </div>
+
+    <script>
+        document.getElementById("OpenPdfBtn2").addEventListener("click", function () {
+            // Get all buttons and hide them
+            var buttons = document.querySelectorAll('button');
+            buttons.forEach(button => button.style.display = 'none');
+            
+            // Get the content of the container
+            var element = document.getElementById("tablecontainer");
+        
+            // Use html2pdf to convert the content to PDF
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: 'Product.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save().then(function() {
+                // Show all buttons again after the PDF is generated
+                buttons.forEach(button => button.style.display = 'inline-block');
+            });
+        });
+    </script>
 
     <!-- Report List -->
     <div id="treportListContainer" class="hidden container">
       <h2 class="title"><i class="fa-regular fa-flag"></i> Report List</h2>
       <div id="infoContainer" class="info-container"></div>
       
-      <table class="table">
-          <thead>
-              <tr>
-                  <th class="col-tuserfullname">User Name</th>
-                  <th class="col-tproduct">Product</th>
-                  <th class="col-tserialnumber">Serial Number</th>
-                  <th class="col-treport">Report</th>
-                  <th class="col-tdate">Date</th>
-                  <th class="col-treport">Technician Feedback</th>
-              </tr>
-          </thead>
-          <tbody id="reportTableBody">
-          </tbody>
-      </table>
+      <div id="reporttablecontainer">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th class="col-tuserfullname">User Name</th>
+                      <th class="col-tproduct">Product</th>
+                      <th class="col-tserialnumber">Serial Number</th>
+                      <th class="col-treport">Report</th>
+                      <th class="col-tdate">Date</th>
+                      <th class="col-treport">Technician Feedback</th>
+                  </tr>
+              </thead>
+              <tbody id="reportTableBody">
+              </tbody>
+          </table>
+      </div>
+      <br>
+      <button id="OpenPdfBtn3" class="pdfBtn">Open In Pdf</button>
   </div>
+
+  <script>
+    document.getElementById("OpenPdfBtn3").addEventListener("click", function () {
+        // Get all buttons and hide them
+        var buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.style.display = 'none');
+        
+        // Get the content of the container
+        var element = document.getElementById("reporttablecontainer");
+    
+        // Use html2pdf to convert the content to PDF
+        html2pdf().from(element).set({
+            margin: 10,
+            filename: 'report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).save().then(function() {
+            // Show all buttons again after the PDF is generated
+            buttons.forEach(button => button.style.display = 'inline-block');
+        });
+    });
+</script>
 
   <!-- Order List -->
   <div id="orderListContainer" class="hidden container">
     <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
     <div id="infoContainer" class="info-container"></div>
     
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="col-userfullname">User Name</th>
-                <th class="col-product">Product</th>
-                <th class="col-status">Status</th>
-                <th class="col-approve"></th>
-                <th class="col-reject"></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="orderTableBody">
-            
+    <div id="ordertablecontainer">
+        <table class="table">
             <thead>
                 <tr>
-                    <th class="col-userfullname"></th>
-                    <th class="col-product"></th>
-                    <th class="col-approval"></th>
-                    <th class="col-Deleteorder"></th>
-                    <th></th>
+                    <th class="col-userfullname">User Name</th>
+                    <th class="col-product">Product</th>
+                    <th class="col-status">Status</th>
+                    <th class="col-approve"></th>
+                    <th class="col-reject"></th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody id="approvedTableBody"></tbody>
-            <tbody id="rejectedTableBody"></tbody>
-        </tbody>
-    </table>
+            <tbody id="orderTableBody">
+                
+                <thead>
+                    <tr>
+                        <th class="col-userfullname"></th>
+                        <th class="col-product"></th>
+                        <th class="col-approval"></th>
+                        <th class="col-Deleteorder"></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="approvedTableBody"></tbody>
+                <tbody id="rejectedTableBody"></tbody>
+            </tbody>
+        </table>
+    </div>
+    <button id="OpenPdfBtn4" class="pdfBtn">Open In Pdf</button>
   </div>
+
+  <script>
+    document.getElementById("OpenPdfBtn4").addEventListener("click", function () {
+        // Get all buttons and hide them
+        var buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.style.display = 'none');
+        
+        // Get the content of the container
+        var element = document.getElementById("ordertablecontainer");
+    
+        // Use html2pdf to convert the content to PDF
+        html2pdf().from(element).set({
+            margin: 10,
+            filename: 'Order.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).save().then(function() {
+            // Show all buttons again after the PDF is generated
+            buttons.forEach(button => button.style.display = 'inline-block');
+        });
+    });
+</script>
 
     <!-- Chat -->
     <div id="feedbackContainer" class="hidden container">
