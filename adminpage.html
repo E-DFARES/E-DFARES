@@ -36,7 +36,7 @@
             <button id="showProfile" data-specific-id="aprofile"><i class="fa-regular fa-user"></i> Profile</button>
             <button id="showProductList" data-specific-id="aproduct"><i class="fa-solid fa-laptop"></i> Product</button>
             <button id="showReportList" data-specific-id="areport"><i class="fa-regular fa-flag"></i> Report</button>
-            <button id="showOrderList" data-specific-id="aorder"><i class="fa-regular fa-clipboard"></i> Order</button>
+            <button id="showOrderList" data-specific-id="aorder"><i class="fa-regular fa-clipboard"></i> Request</button>
             <button id="showFeedback" data-specific-id="afeedback"><i class="fa-regular fa-comment"></i> Feedback</button>
             <button id="showContactus" data-specific-id="acontact"><i class="fa-solid fa-phone"></i> Contact Us</button>
             <button id="showUsermanual" data-specific-id="amanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
@@ -227,9 +227,9 @@
     });
 </script>
 
-  <!-- Order List -->
+  <!-- Request List -->
   <div id="orderListContainer" class="hidden container">
-    <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
+    <h2 class="title"><i class="fa-regular fa-clipboard"></i> Request</h2>
     <div id="infoContainer" class="info-container"></div>
     
     <div id="ordertablecontainer">
@@ -276,7 +276,7 @@
         // Use html2pdf to convert the content to PDF
         html2pdf().from(element).set({
             margin: 10,
-            filename: 'Order.pdf',
+            filename: 'Request.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -345,8 +345,8 @@
                 <li><b>View Reports</b></li>
                 <li>Admin can view reports made by users.</li>
                 <br>
-                <li><b>Approve Orders</b></li>
-                <li>Admin needs to approve orders, which will then be sent to technicians for processing.</li>
+                <li><b>Approve Request</b></li>
+                <li>Admin needs to approve Request, which will then be sent to technicians for processing.</li>
             </ul>
         </div>
     </div>
@@ -554,7 +554,7 @@
 
     
 
-    // Function to fetch and display orders with real-time updates
+    // Function to fetch and display Request with real-time updates
     function fetchAndDisplayOrders() {
         const ordersRef = ref(db, `AdminsAuthList/${adminUid}/orders`);
         
@@ -584,10 +584,10 @@
                     orderTableBody.appendChild(orderRow);
                 });
             } else {
-                console.log("No orders available for this admin.");
+                console.log("No Request available for this admin.");
             }
         }, (error) => {
-            console.error("Error retrieving orders: ", error);
+            console.error("Error retrieving Request: ", error);
         });
     }
 
@@ -605,7 +605,7 @@
         getAdminInfo(admincUid);
     }
 
-    // Function to fetch and display approved orders with real-time updates
+    // Function to fetch and display approved Request with real-time updates
     function fetchAndDisplayApprovedOrders() {
         const ordersRef = ref(db, `AdminsAuthList/${admincUid}/approved`);
 
@@ -633,14 +633,14 @@
                 });
                 addDeleteEventListeners();
             } else {
-                console.log("No approved orders available for this admin.");
+                console.log("No approved Request available for this admin.");
             }
         }, (error) => {
-            console.error("Error retrieving approved orders: ", error);
+            console.error("Error retrieving approved Request: ", error);
         });
     }
 
-    // Function to fetch and display rejected orders with real-time updates
+    // Function to fetch and display rejected Request with real-time updates
     function fetchAndDisplayRejectedOrders() {
         const ordersRef = ref(db, `AdminsAuthList/${admincUid}/rejected`);
 
@@ -668,10 +668,10 @@
                 });
                 addDeleteEventListeners();
             } else {
-                console.log("No rejected orders available for this admin.");
+                console.log("No rejected Request available for this admin.");
             }
         }, (error) => {
-            console.error("Error retrieving rejected orders: ", error);
+            console.error("Error retrieving rejected Request: ", error);
         });
     }
 

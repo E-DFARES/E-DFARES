@@ -50,7 +50,7 @@
             <button id="showProfile" data-specific-id="uprofile"><i class="fa-regular fa-user"></i> Profile</button>
             <button id="showProductList" data-specific-id="uproduct"><i class="fa-solid fa-laptop"></i> Product</button>
             <button id="showReportList" data-specific-id="ureport"><i class="fa-regular fa-flag"></i> Report</button>
-            <button id="showOrderList" data-specific-id="uorder"><i class="fa-regular fa-clipboard"></i> Order</button>
+            <button id="showOrderList" data-specific-id="uorder"><i class="fa-regular fa-clipboard"></i> Request</button>
             <button id="showFeedback" data-specific-id="ufeedback"><i class="fa-regular fa-comment"></i> Feedback</button>
             <button id="showContactus" data-specific-id="ucontact"><i class="fa-solid fa-phone"></i> Contact Admin</button>
             <button id="showUsermanual" data-specific-id="umanual"><i class="fa-regular fa-file-lines"></i> User Manual</button>
@@ -160,10 +160,10 @@
 
     
     <div id="orderListContainer" class="hidden container">
-        <h2 class="title"><i class="fa-regular fa-clipboard"></i> Order</h2>
+        <h2 class="title"><i class="fa-regular fa-clipboard"></i> Request</h2>
         <div id="infoContainer" class="info-container"></div>
         <input type="text" id="orderInp" placeholder="Product name" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
-        <button id="orderBtn">Order</button> 
+        <button id="orderBtn">Request</button> 
             
             <table class="table">
             <thead>
@@ -223,8 +223,8 @@
                 <li><b>Make Report</b></li>
                 <li>User can create a report about a product by typing the problem in the report form.</li>
                 <br>
-                <li><b>Make Order</b></li>
-                <li>User can place an order for a product. The order will be sent to the admin for approval or rejection.</li>
+                <li><b>Make Request</b></li>
+                <li>User can place an Request for a product. The Request will be sent to the admin for approval or rejection.</li>
                 <br>
                 <li><b>Contact Admin</b></li>
                 <li>User can click the "Contact Admin" button to view the admin's contact info, including name, phone number, and address.</li>
@@ -297,7 +297,7 @@
                         .then(() => {
                             // Clear input field after submission
                             document.getElementById("orderInp").value = "";
-                            alert("Order placed successfully.");
+                            alert("Request placed successfully.");
                         })
                         .catch((error) => {
                             console.error("Error placing order: ", error);
@@ -442,7 +442,7 @@ fetchAndDisplayProducts();
                 const orderRef = ref(db, `AdminsAuthList/${adminUid}/${category}/${orderKey}`);
                 remove(orderRef)
                     .then(() => {
-                        console.log("Order deleted successfully");
+                        console.log("Request deleted successfully");
                     })
                     .catch((error) => {
                         console.error("Error deleting order: ", error);
@@ -463,7 +463,7 @@ fetchAndDisplayProducts();
                 }
             });
 
-            // Call fetchAndDisplayOrders to initialize the real-time data fetching
+            // Call fetchAndDisplayRequests to initialize the real-time data fetching
             fetchAndDisplayOrders();
 
 
