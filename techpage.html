@@ -313,6 +313,8 @@
 
 
 
+        let alertTriggered = false;
+
         function fetchReports() {
             const adminUid = localStorage.getItem("tech-admin-uid");
             if (!adminUid) {
@@ -401,8 +403,9 @@
                         sendButtonCell.appendChild(sendButton);
                         row.appendChild(sendButtonCell);
 
-
                         reportTableBody.appendChild(row);
+
+                        checkEditableCellEmpty(editableCell, data.serial, data.date);
                     });
                 } else {
                     console.log("No data available");
@@ -410,16 +413,14 @@
             }, (error) => {
                 console.error("Error fetching reports:", error);
             });
-
         }
 
-        // Function to store edited text back into the database
         function storeEditedText(adminUid, reportId, editedText) {
             const reportRef = ref(db, `AdminsAuthList/${adminUid}/reports/${reportId}`);
             update(reportRef, { editedText })
                 .then(() => {
                     console.log("Text saved successfully!");
-                    alert("Feedback send successfully!");
+                    alert("Feedback sent successfully!");
                 })
                 .catch((error) => {
                     console.error("Error saving text:", error);
@@ -427,8 +428,26 @@
                 });
         }
 
-        // Call fetchReports to initialize the real-time data fetching
+        function checkEditableCellEmpty(editableCell, serial, reportDate) {
+            const currentDate = new Date();
+            const reportDateObj = new Date(reportDate);
+            const daysDifference = (currentDate - reportDateObj) / (1000 * 60 * 60 * 24); // Calculate difference in days
+
+            if (daysDifference > 3) {
+                setTimeout(() => {
+                    if (editableCell.textContent.trim() === "" && !alertTriggered) {
+                        alert("Some reports have been pending feedback for over 3 days. Please review and submit your feedback.");
+                        alertTriggered = true; 
+                        document.getElementById("showReportList").click();
+                        location.reload(); 
+                    }
+                }, 10000); // 1 minit
+            }
+        }
+
         fetchReports();
+
+
 
 
         function getAdminInfo(adminUid) {
